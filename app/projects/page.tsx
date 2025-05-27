@@ -61,7 +61,7 @@ const projects = [
 		category: "Travel",
 		liveUrl: "https://sereneair.com/",
 		githubUrl: null,
-		featured: true,
+		featured: false,
 		// year: "2024",
 	},
 	{
@@ -73,7 +73,7 @@ const projects = [
 		category: "Tourism",
 		liveUrl: "https://www.click.gos.pk/",
 		githubUrl: null,
-		featured: false,
+		featured: true,
 		// year: "2023",
 	},
 	{
