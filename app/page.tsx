@@ -230,7 +230,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Achievements Section */}
+      {/* Achievements Section
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -267,7 +267,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">

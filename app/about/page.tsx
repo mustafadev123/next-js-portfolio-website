@@ -79,7 +79,7 @@ export default function About() {
               <p>
                 I'm a Software Engineer with hands-on experience building scalable backend systems, secure APIs, and
                 AI-integrated solutions. Currently pursuing my BSc in Computer Science at Lahore University of
-                Management Sciences (LUMS) with a GPA of 3.70.
+                Management Sciences (LUMS).
               </p>
               <p>
                 My expertise spans across multiple technologies including Laravel, Spring Boot, and React, with a strong
