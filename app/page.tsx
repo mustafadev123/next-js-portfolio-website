@@ -2,11 +2,15 @@
 
 import { motion, useScroll, useTransform } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, Download, Github, Linkedin, Mail, Code, Brain, Rocket, Star } from "lucide-react"
+import { ArrowRight, Download, Github, Linkedin, Mail, Code, Brain, Rocket, Star, ExternalLink } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { TechSlider } from "@/components/ui/tech-slider"
+import { useEffect, useState } from "react"
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import Image from "next/image"
+import { cn } from "@/lib/utils"
 
 const technologies = [
 	"React",
@@ -26,10 +30,99 @@ const achievements = [
 	{ icon: Rocket, label: "7+ Projects", description: "Across multiple domains" },
 ]
 
+const projects = [
+	{
+		title: "Crop Visualization Platform",
+		description:
+			"Interactive map with satellite imagery and NDVI overlays for crop-health monitoring using geospatial analysis.",
+		image: "/crop_visualization.png",
+		technologies: ["React", "Satellite Imagery", "NDVI"],
+		liveUrl: "https://satellite-portal-crop.vercel.app/",
+		githubUrl: "",
+		featured: true,
+	},
+	{
+		title: "Karachi City Guide",
+		description:
+			"Tourism portal featuring interactive maps, event listings, and comprehensive guide content for Karachi.",
+		image: "/khi_pic.png",
+		technologies: ["React", "Interactive Maps", "Tourism"],
+		liveUrl: "https://www.click.gos.pk/",
+		githubUrl: "",
+		featured: true,
+	},
+	{
+		title: "Serene Airlines Website",
+		description:
+			"Professional airline booking UI with dynamic search widget, booking flow, and responsive design.",
+		image: "/serene_pic.png",
+		technologies: ["React", "UI/UX", "Booking System"],
+		liveUrl: "https://sereneair.com/",
+		githubUrl: "",
+		featured: true,
+	},
+	// Add more projects as needed
+]
+
 export default function Home() {
 	const { scrollYProgress } = useScroll()
 	const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
 	const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+
+	// --- Featured Projects 3D Carousel Section ---
+	const featuredProjects = projects.filter((p) => p.featured)
+	const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null)
+	const [selected, setSelected] = useState(1) // Start with middle item (index 1 for 3 items)
+	const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+	const [isMobileView, setIsMobileView] = useState(false)
+
+	// Add responsive check for mobile/desktop view
+	useEffect(() => {
+		const checkScreenSize = () => {
+			setIsMobileView(window.innerWidth < 1024)
+		}
+		
+		// Initial check
+		checkScreenSize()
+		
+		// Add event listener for resize
+		window.addEventListener('resize', checkScreenSize)
+		
+		// Cleanup
+		return () => {
+			window.removeEventListener('resize', checkScreenSize)
+		}
+	}, [])
+
+	useEffect(() => {
+		if (!carouselApi) return
+		
+		const onSelect = () => {
+			setSelected(carouselApi.selectedScrollSnap())
+		}
+		
+		const onReInit = () => {
+			setScrollSnaps(carouselApi.scrollSnapList())
+			setSelected(carouselApi.selectedScrollSnap())
+		}
+		
+		// Set up event listeners
+		carouselApi.on("select", onSelect)
+		carouselApi.on("reInit", onReInit)
+		
+		// Initialize
+		setScrollSnaps(carouselApi.scrollSnapList())
+		
+		// Set initial position to middle item
+		const middleIndex = Math.floor(featuredProjects.length / 2)
+		carouselApi.scrollTo(middleIndex, true)
+		setSelected(middleIndex)
+		
+		return () => {
+			carouselApi.off("select", onSelect)
+			carouselApi.off("reInit", onReInit)
+		}
+	}, [carouselApi, featuredProjects.length])
 
 	return (
 		<div className="min-h-screen">
@@ -286,52 +379,77 @@ export default function Home() {
 						<h3 className="text-2xl font-bold mb-4">Work Experience</h3>
 						<p className="text-muted-foreground">A quick look at my professional journey</p>
 					</motion.div>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-						<Card className="h-full">
-							<CardContent className="p-6">
-								<h4 className="text-lg font-bold mb-1">Backend Engineer</h4>
-								<p className="text-muted-foreground mb-1">The Synergates Business Solutions</p>
-								<p className="text-xs mb-2">Jun 2024 - Aug 2024</p>
-								<ul className="list-disc list-inside text-sm text-muted-foreground">
-									<li>Engineered scalable Laravel backend for a government portal</li>
-									<li>Optimized server performance (15% faster load times)</li>
-									<li>Developed APIs for Markea (wedding hall search) & AI-powered health apps</li>
-								</ul>
-							</CardContent>
-						</Card>
-						<Card className="h-full">
-							<CardContent className="p-6">
-								<h4 className="text-lg font-bold mb-1">SWE Intern</h4>
-								<p className="text-muted-foreground mb-1">10Pearls Pakistan</p>
-								<p className="text-xs mb-2">Jun 2024 - Jul 2024</p>
-								<ul className="list-disc list-inside text-sm text-muted-foreground">
-									<li>Built full-stack CRUD app (Spring Boot, React, MySQL)</li>
-									<li>Reduced bugs by 30% with automated testing</li>
-								</ul>
-							</CardContent>
-						</Card>
-						<Card className="h-full">
-							<CardContent className="p-6">
-								<h4 className="text-lg font-bold mb-1"> SWE Intern</h4>
-								<p className="text-muted-foreground mb-1">GERRY'S INFORMATION TECHNOLOGY</p>
-								<p className="text-xs mb-2">Jul 2023 – Sep 2023</p>
-								<ul className="list-disc list-inside text-sm text-muted-foreground">
-									<li>Optimized aviation & FedEx web apps (30% faster load, 40% more mobile traffic)</li>
-									<li>Designed responsive UIs and collaborated on scalable front-end solutions</li>
-								</ul>
-							</CardContent>
-						</Card>
-						<Card className="h-full">
-							<CardContent className="p-6">
-								<h4 className="text-lg font-bold mb-1">SWE Intern</h4>
-								<p className="text-muted-foreground mb-1">Netsol Pakistan</p>
-								<p className="text-xs mb-2">May 2023 - Aug 2023</p>
-								<ul className="list-disc list-inside text-sm text-muted-foreground">
-									<li>Automated Flex engine testing with Flask</li>
-									<li>Improved API scalability for enterprise finance product</li>
-								</ul>
-							</CardContent>
-						</Card>
+					<div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-8">
+						{/* Card with blue gradient shadow */}
+						<div className="relative">
+							{/* Permanent gradient shadow box */}
+							<div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+								<CardContent className="p-6">
+									<h4 className="text-lg font-bold mb-1">Backend Engineer</h4>
+									<p className="text-muted-foreground mb-1">The Synergates Business Solutions</p>
+									<p className="text-xs mb-2">Jun 2024 - Aug 2024</p>
+									<ul className="list-disc list-inside text-sm text-muted-foreground">
+										<li>Engineered scalable Laravel backend for a government portal</li>
+										<li>Optimized server performance (15% faster load times)</li>
+										<li>Developed APIs for Markea (wedding hall search) & AI-powered health apps</li>
+									</ul>
+								</CardContent>
+							</Card>
+						</div>
+						
+						{/* Card with purple gradient shadow */}
+						<div className="relative">
+							{/* Permanent gradient shadow box */}
+							<div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 to-purple-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+								<CardContent className="p-6">
+									<h4 className="text-lg font-bold mb-1">SWE Intern</h4>
+									<p className="text-muted-foreground mb-1">10Pearls Pakistan</p>
+									<p className="text-xs mb-2">Jun 2024 - Jul 2024</p>
+									<ul className="list-disc list-inside text-sm text-muted-foreground">
+										<li>Built full-stack CRUD app (Spring Boot, React, MySQL)</li>
+										<li>Reduced bugs by 30% with automated testing</li>
+										<li>Improved user interface consistency and API reliability</li>
+									</ul>
+								</CardContent>
+							</Card>
+						</div>
+						
+						{/* Card with pink gradient shadow */}
+						<div className="relative">
+							{/* Permanent gradient shadow box */}
+							<div className="absolute inset-0 bg-gradient-to-r from-pink-500/15 to-pink-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+								<CardContent className="p-6">
+									<h4 className="text-lg font-bold mb-1">SWE Intern</h4>
+									<p className="text-muted-foreground mb-1">GERRY'S INFORMATION TECHNOLOGY</p>
+									<p className="text-xs mb-2">Jul 2023 – Sep 2023</p>
+									<ul className="list-disc list-inside text-sm text-muted-foreground">
+										<li>Optimized aviation & FedEx web apps (30% faster load, 40% more mobile traffic)</li>
+										<li>Designed responsive UIs and collaborated on scalable front-end solutions</li>
+									</ul>
+								</CardContent>
+							</Card>
+						</div>
+						
+						{/* Card with blue gradient shadow (repeated) */}
+						<div className="relative">
+							{/* Permanent gradient shadow box */}
+							<div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+								<CardContent className="p-6">
+									<h4 className="text-lg font-bold mb-1">SWE Intern</h4>
+									<p className="text-muted-foreground mb-1">Netsol Pakistan</p>
+									<p className="text-xs mb-2">May 2023 - Aug 2023</p>
+									<ul className="list-disc list-inside text-sm text-muted-foreground">
+										<li>Automated Flex engine testing with Flask</li>
+										<li>Improved API scalability for enterprise finance product</li>
+										<li>Contributed to faster processing times and improved scalability</li>
+									</ul>
+								</CardContent>
+							</Card>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -349,62 +467,129 @@ export default function Home() {
 						<h3 className="text-2xl font-bold mb-4">Featured Projects</h3>
 						<p className="text-muted-foreground">A glimpse of my best work</p>
 					</motion.div>
-					{/* Simple slider/carousel for 3 projects */}
-					<div className="flex flex-col md:flex-row gap-8 justify-center items-center">
-						{/* Crop Visualization Platform */}
-						<Card className="w-full md:w-1/3">
-							<CardContent className="p-4 flex flex-col items-center">
-								<img src="/crop_visualization.png" alt="Crop Visualization Platform" className="rounded-lg mb-4 w-full h-40 object-cover" />
-								<h4 className="font-bold text-lg mb-2 text-center">Crop Visualization Platform</h4>
-								<p className="text-sm text-muted-foreground mb-2 text-center">Interactive map with satellite imagery and NDVI overlays for crop-health monitoring using geospatial analysis.</p>
-								<div className="flex gap-2 mb-2 flex-wrap justify-center">
-									<Badge variant="secondary">React</Badge>
-									<Badge variant="secondary">Satellite Imagery</Badge>
-									<Badge variant="secondary">NDVI</Badge>
-								</div>
-								<div className="flex gap-2">
-									<Button asChild size="sm" variant="outline">
-										<Link href="https://satellite-portal-crop.vercel.app/" target="_blank">Live Demo</Link>
-									</Button>
-								</div>
-							</CardContent>
-						</Card>
-						{/* Karachi City Guide */}
-						<Card className="w-full md:w-1/3">
-							<CardContent className="p-4 flex flex-col items-center">
-								<img src="/khi_pic.png" alt="Karachi City Guide" className="rounded-lg mb-4 w-full h-40 object-cover" />
-								<h4 className="font-bold text-lg mb-2 text-center">Karachi City Guide</h4>
-								<p className="text-sm text-muted-foreground mb-2 text-center">Tourism portal featuring interactive maps, event listings, and comprehensive guide content for Karachi.</p>
-								<div className="flex gap-2 mb-2 flex-wrap justify-center">
-									<Badge variant="secondary">React</Badge>
-									<Badge variant="secondary">Interactive Maps</Badge>
-									<Badge variant="secondary">Tourism</Badge>
-								</div>
-								<div className="flex gap-2">
-									<Button asChild size="sm" variant="outline">
-										<Link href="https://www.click.gos.pk/" target="_blank">Live Demo</Link>
-									</Button>
-								</div>
-							</CardContent>
-						</Card>
-						{/* Serene Airlines Website */}
-						<Card className="w-full md:w-1/3">
-							<CardContent className="p-4 flex flex-col items-center">
-								<img src="/serene_pic.png" alt="Serene Airlines Website" className="rounded-lg mb-4 w-full h-40 object-cover" />
-								<h4 className="font-bold text-lg mb-2 text-center">Serene Airlines Website</h4>
-								<p className="text-sm text-muted-foreground mb-2 text-center">Professional airline booking UI with dynamic search widget, booking flow, and responsive design.</p>
-								<div className="flex gap-2 mb-2 flex-wrap justify-center">
-									<Badge variant="secondary">React</Badge>
-									<Badge variant="secondary">UI/UX</Badge>
-									<Badge variant="secondary">Booking System</Badge>
-								</div>
-								<div className="flex gap-2">
-									<Button asChild size="sm" variant="outline">
-										<Link href="https://sereneair.com/" target="_blank">Live Demo</Link>
-									</Button>
-								</div>
-							</CardContent>
-						</Card>
+					<div className="w-full flex flex-col items-center">
+						<div className="w-full perspective-1000">
+							<Carousel 
+								setApi={setCarouselApi}
+								opts={{
+									loop: true,
+									align: "center",
+									startIndex: Math.floor(featuredProjects.length / 2),
+									// Adjust dragging behavior based on screen size
+									dragFree: !isMobileView,
+									// Fine-tune carousel behavior for different screen sizes
+									containScroll: isMobileView ? "trimSnaps" : "keepSnaps"
+								}}
+								className="relative w-full"
+							>
+								{/* Re-added left/right arrows */}
+								<CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-foreground bg-background hover:bg-primary/10" />
+								<CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-foreground bg-background hover:bg-primary/10" />
+								<CarouselContent className={cn(
+									"flex items-center",
+									isMobileView ? "py-4" : "py-12" // More space on desktop for the 3D effect
+								)}>
+									{featuredProjects.map((project, idx) => (
+										<CarouselItem 
+											key={project.title} 
+											// Consistent basis classes across breakpoints
+											className="px-2 basis-full md:basis-1/2 lg:basis-[45%] xl:basis-[40%] 2xl:basis-[35%]"
+										>
+											<motion.div
+												className="transform-gpu cursor-pointer"
+												onClick={() => {
+													if (carouselApi && idx !== selected) {
+														// Always use animation for a smoother experience
+														// but adjust timing based on screen size
+														const animated = true;
+														carouselApi.scrollTo(idx, animated);
+														// Manually update the selected state for immediate feedback
+														setSelected(idx);
+													}
+												}}
+												animate={{
+													scale: idx === selected ? 1.1 : 0.85,
+													// Adjust rotation angle based on screen size
+													rotateY: idx === selected ? 0 : (idx - selected) * (isMobileView ? 15 : 8),
+													// Higher z-index for selected card
+													zIndex: idx === selected ? 10 : 1,
+													// Enhance brightness difference for better focus
+													filter: idx === selected ? "brightness(1)" : "brightness(0.8)",
+													// Subtle y-axis movement for desktop 3D effect
+													y: isMobileView ? 0 : (idx === selected ? -10 : 0)
+												}}
+												transition={{ 
+													type: "tween", 
+													duration: 0.4,
+													ease: [0.4, 0, 0.2, 1] 
+												}}
+											>
+												<Card className="overflow-hidden bg-card/80 backdrop-blur-sm">
+													<div className="relative w-full h-48">
+														<Image
+															src={project.image || "/placeholder.svg"}
+															alt={project.title}
+															fill
+															sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+															className="object-cover"
+														/>
+													</div>
+													<CardContent className="p-4 flex flex-col flex-grow">
+														<h4 className="font-semibold text-lg mb-1">{project.title}</h4>
+														<p className="text-sm text-muted-foreground line-clamp-3 mb-3 flex-grow">{project.description}</p>
+														<div className="flex flex-wrap gap-1 mb-3">
+															{project.technologies.slice(0, 3).map((tech) => (
+																<Badge key={tech} variant="secondary" className="text-xs">
+																	{tech}
+																</Badge>
+															))}
+															{project.technologies.length > 3 && (
+																<Badge variant="secondary" className="text-xs">
+																	+{project.technologies.length - 3} more
+																</Badge>
+															)}
+														</div>
+														<div className="flex gap-2 mt-auto">
+															{project.liveUrl && (
+																<Button size="sm" asChild className="flex-1">
+																	<Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">Live <ExternalLink className="ml-1 h-3 w-3" /></Link>
+																</Button>
+															)}
+															{project.githubUrl && (
+																<Button size="sm" variant="outline" asChild className="flex-1">
+																	<Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">Code <Github className="ml-1 h-3 w-3" /></Link>
+																</Button>
+															)}
+														</div>
+													</CardContent>
+												</Card>
+											</motion.div>
+										</CarouselItem>
+									))}
+								</CarouselContent>
+							</Carousel>
+						</div>
+						{/* Dot Indicators */}
+						<div className="flex justify-center gap-2 mt-6">
+							{scrollSnaps.map((_, index) => (
+								<Button
+									key={index}
+									variant="outline"
+									size="icon"
+									className={cn(
+										"h-2 w-2 rounded-full p-0 bg-transparent hover:bg-primary/20 border-primary/50",
+										index === selected ? "bg-primary scale-125" : "bg-primary/30"
+									)}
+									onClick={() => {
+										if (carouselApi) {
+											carouselApi.scrollTo(index, true);
+											setSelected(index);
+										}
+									}}
+									aria-label={`Go to slide ${index + 1}`}
+								/>
+							))}
+						</div>
 					</div>
 				</div>
 			</section>

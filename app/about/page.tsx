@@ -44,7 +44,7 @@ const experiences = [
 	},
 	{
 		company: "Netsol Pakistan",
-		role: "SWE Internship",
+		role: "SWE Intern",
 		period: "May 2023 - Aug 2023",
 		achievements: [
 			"Developed Python scripts using Flask to automate testing of Flex calculation engine",
@@ -54,7 +54,7 @@ const experiences = [
 	},
 	{
 		company: "GERRY'S INFORMATION TECHNOLOGY",
-		role: "Internship",
+		role: "SWE Intern",
 		period: "Jul 2023 – Sep 2023",
 		achievements: [
 			"Optimized website performance by implementing transitioning hooks, achieving a 30% reduction in page load times.",
