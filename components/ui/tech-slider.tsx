@@ -1,23 +1,25 @@
 "use client"
 
-// Import Inter font (if you need it)
-import { Inter } from "next/font/google"
 import React from "react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
-const inter = Inter({ subsets: ["latin"], weight: ["400", "600", "700"] })
+interface Technology {
+  name: string;
+  logo: string;
+}
 
-const technologies = [
-  "React",
-  "Next.js",
-  "Laravel",
-  "Spring Boot",
-  "Python",
-  "Java",
-  "Docker",
-  "AWS",
-  "MongoDB",
-  "MySQL",
+const technologies: Technology[] = [
+  { name: "React", logo: "/react.png" },
+  { name: "Next.js", logo: "/nextjs.png" },
+  { name: "Laravel", logo: "/laravel.png" },
+  { name: "Spring Boot", logo: "/springboot.png" },
+  { name: "Python", logo: "/python.png" },
+  { name: "Java", logo: "/java.png" },
+  { name: "Docker", logo: "/docker.png" },
+  { name: "AWS", logo: "/aws.png" },
+  { name: "MongoDB", logo: "/mongodb.png" },
+  { name: "MySQL", logo: "/my_sql.png" },
 ]
 
 // We triple the list so it loops seamlessly
@@ -41,9 +43,7 @@ export function TechSlider({ className = "" }: { className?: string }) {
       {/* <div className="absolute right-0 top-0 bottom-0 w-20
           bg-gradient-to-l from-white to-transparent
           dark:from-gray-900 dark:to-transparent
-          z-10" /> */}
-
-      <motion.div
+          z-10" /> */}      <motion.div
         className="flex"
         animate={{ x: [0, -200 * technologies.length] }}
         transition={{
@@ -58,14 +58,17 @@ export function TechSlider({ className = "" }: { className?: string }) {
         {extendedTechnologies.map((tech, index) => (
           <div
             key={index}
-            className="w-[160px] md:w-[200px] flex-shrink-0 flex items-center justify-center h-full"
+            className="w-[200px] md:w-[240px] flex-shrink-0 flex items-center justify-center h-full bg-transparent"
           >
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              className="text-base md:text-lg font-normal text-gray-900 dark:text-gray-100 hover:text-black dark:hover:text-white transition-colors duration-300 ease-out"
-            >
-              {tech}
-            </motion.span>
+            <div className="relative w-32 md:w-40 h-16 md:h-20 bg-[#0c101b] flex items-center justify-center">
+              <Image
+                src={tech.logo}
+                alt={tech.name}
+                fill
+                style={{ objectFit: "contain" }}
+                className="mix-blend-lighten"
+              />
+            </div>
           </div>
         ))}
       </motion.div>

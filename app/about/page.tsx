@@ -127,44 +127,50 @@ export default function About() {
 					</div>
 
 					<div className="space-y-6">
-						<Card>
-							<CardContent className="p-6">
-								<h3 className="font-semibold mb-4">Contact Information</h3>
-								<div className="space-y-3">
-									<div className="flex items-center gap-3">
-										<MapPin className="h-4 w-4 text-muted-foreground" />
-										<span>Karachi, Pakistan</span>
+						<div className="relative">
+							<div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+								<CardContent className="p-6">
+									<h3 className="font-semibold mb-4">Contact Information</h3>
+									<div className="space-y-3">
+										<div className="flex items-center gap-3">
+											<MapPin className="h-4 w-4 text-muted-foreground" />
+											<span>Karachi, Pakistan</span>
+										</div>
+										<div className="flex items-center gap-3">
+											<Phone className="h-4 w-4 text-muted-foreground" />
+											<span>+92-309-3300668</span>
+										</div>
+										<div className="flex items-center gap-3">
+											<Mail className="h-4 w-4 text-muted-foreground" />
+											<span>mustufashadab123@gmail.com</span>
+										</div>
 									</div>
-									<div className="flex items-center gap-3">
-										<Phone className="h-4 w-4 text-muted-foreground" />
-										<span>+92-309-3300668</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<Mail className="h-4 w-4 text-muted-foreground" />
-										<span>mustufashadab123@gmail.com</span>
-									</div>
-								</div>
-							</CardContent>
-						</Card>
+								</CardContent>
+							</Card>
+						</div>
 
-						<Card>
-							<CardContent className="p-6">
-								<h3 className="font-semibold mb-4">Education</h3>
-								<div>
-									<h4 className="font-medium">
-										Lahore University of Management Sciences (LUMS)
-									</h4>
-									<p className="text-sm text-muted-foreground">
-										BSc, Computer Science • GPA: 3.70 • Jun 2026
-									</p>
-									<p className="text-sm text-muted-foreground mt-2">
-										Coursework: OOP, Data Structures, AI, Machine Learning, Deep
-										Learning, Computer Vision, Software Engineering, Distributed
-										Systems
-									</p>
-								</div>
-							</CardContent>
-						</Card>
+						<div className="relative">
+							<div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 to-purple-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+								<CardContent className="p-6">
+									<h3 className="font-semibold mb-4">Education</h3>
+									<div>
+										<h4 className="font-medium">
+											Lahore University of Management Sciences (LUMS)
+										</h4>
+										<p className="text-sm text-muted-foreground">
+											BSc, Computer Science • GPA: 3.70 • Jun 2026
+										</p>
+										<p className="text-sm text-muted-foreground mt-2">
+											Coursework: OOP, Data Structures, AI, Machine Learning, Deep
+											Learning, Computer Vision, Software Engineering, Distributed
+											Systems
+										</p>
+									</div>
+								</CardContent>
+							</Card>
+						</div>
 					</div>
 				</motion.div>
 
@@ -188,21 +194,28 @@ export default function About() {
 								transition={{ duration: 0.5, delay: index * 0.1 }}
 								viewport={{ once: true }}
 							>
-								<Card className="h-full">
-									<CardContent className="p-6">
-										<h3 className="font-semibold mb-4">{skillGroup.category}</h3>
-										<div className="space-y-2">
-											{skillGroup.items.map((skill) => (
-												<span
-													key={skill}
-													className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm mr-2 mb-2"
-												>
-													{skill}
-												</span>
-											))}
-										</div>
-									</CardContent>
-								</Card>
+								<div className="relative h-full">
+									<div className={`absolute inset-0 bg-gradient-to-r ${
+										index % 3 === 0 ? 'from-blue-500/15 to-blue-600/25' : 
+										index % 3 === 1 ? 'from-purple-500/15 to-purple-600/25' : 
+										'from-pink-500/15 to-pink-600/25'
+									} blur-md rounded-xl transform translate-y-1 scale-[0.98]`}></div>
+									<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+										<CardContent className="p-6">
+											<h3 className="font-semibold mb-4">{skillGroup.category}</h3>
+											<div className="space-y-2">
+												{skillGroup.items.map((skill) => (
+													<span
+														key={skill}
+														className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm mr-2 mb-2"
+													>
+														{skill}
+													</span>
+												))}
+											</div>
+										</CardContent>
+									</Card>
+								</div>
 							</motion.div>
 						))}
 					</div>
@@ -225,32 +238,39 @@ export default function About() {
 								transition={{ duration: 0.5, delay: index * 0.1 }}
 								viewport={{ once: true }}
 							>
-								<Card>
-									<CardContent className="p-6">
-										<div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-											<div>
-												<h3 className="text-xl font-semibold">{exp.role}</h3>
-												<p className="text-primary font-medium">
-													{exp.company}
-												</p>
+								<div className="relative">
+									<div className={`absolute inset-0 bg-gradient-to-r ${
+										index % 3 === 0 ? 'from-blue-500/15 to-blue-600/25' : 
+										index % 3 === 1 ? 'from-purple-500/15 to-purple-600/25' : 
+										'from-pink-500/15 to-pink-600/25'
+									} blur-md rounded-xl transform translate-y-1 scale-[0.98]`}></div>
+									<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+										<CardContent className="p-6">
+											<div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+												<div>
+													<h3 className="text-xl font-semibold">{exp.role}</h3>
+													<p className="text-primary font-medium">
+														{exp.company}
+													</p>
+												</div>
+												<span className="text-sm text-muted-foreground">
+													{exp.period}
+												</span>
 											</div>
-											<span className="text-sm text-muted-foreground">
-												{exp.period}
-											</span>
-										</div>
-										<ul className="space-y-2">
-											{exp.achievements.map((achievement, i) => (
-												<li
-													key={i}
-													className="text-muted-foreground flex items-start"
-												>
-													<span className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
-													{achievement}
-												</li>
-											))}
-										</ul>
-									</CardContent>
-								</Card>
+											<ul className="space-y-2">
+												{exp.achievements.map((achievement, i) => (
+													<li
+														key={i}
+														className="text-muted-foreground flex items-start"
+													>
+														<span className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
+														{achievement}
+													</li>
+												))}
+											</ul>
+										</CardContent>
+									</Card>
+								</div>
 							</motion.div>
 						))}
 					</div>

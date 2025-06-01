@@ -13,16 +13,16 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 const technologies = [
-	"React",
-	"Next.js",
-	"Laravel",
-	"Spring Boot",
-	"Python",
-	"Java",
-	"Docker",
-	"AWS",
-	"MongoDB",
-	"MySQL",
+	{ name: "React", logo: "/react.png" },
+	{ name: "Next.js", logo: "/nextjs.png" },
+	{ name: "Laravel", logo: "/laravel.png" },
+	{ name: "Spring Boot", logo: "/springboot.png" },
+	{ name: "Python", logo: "/python.png" },
+	{ name: "Java", logo: "/java.png" },
+	{ name: "Docker", logo: "/docker.png" },
+	{ name: "AWS", logo: "/aws.png" },
+	{ name: "MongoDB", logo: "/mongodb.png" },
+	{ name: "MySQL", logo: "/my_sql.png" },
 ]
 
 const achievements = [

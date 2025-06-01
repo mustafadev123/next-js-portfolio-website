@@ -57,59 +57,62 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Card>
-              <CardHeader>
-                <CardTitle>Send me a message</CardTitle>
-                <CardDescription>Fill out the form below and I'll get back to you as soon as possible.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="Your name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+                <CardHeader>
+                  <CardTitle>Send me a message</CardTitle>
+                  <CardDescription>Fill out the form below and I'll get back to you as soon as possible.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Name</Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="Your name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="your.email@example.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="your.email@example.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="Tell me about your project or just say hello!"
-                      rows={6}
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="message">Message</Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        placeholder="Tell me about your project or just say hello!"
+                        rows={6}
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
 
-                  <Button type="submit" className="w-full">
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Message
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                    <Button type="submit" className="w-full">
+                      <Send className="mr-2 h-4 w-4" />
+                      Send Message
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
           </motion.div>
 
           {/* Contact Information */}
@@ -121,97 +124,106 @@ export default function Contact() {
             className="space-y-8"
           >
             {/* Contact Details */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
-                <CardDescription>Feel free to reach out through any of these channels.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <Mail className="h-5 w-5 text-primary" />
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+                <CardHeader>
+                  <CardTitle>Contact Information</CardTitle>
+                  <CardDescription>Feel free to reach out through any of these channels.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <Mail className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Email</p>
+                      <p className="text-muted-foreground">mustufashadab123@gmail.com</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">Email</p>
-                    <p className="text-muted-foreground">mustufashadab123@gmail.com</p>
-                  </div>
-                </div>
 
-                <div className="flex items-center space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <Phone className="h-5 w-5 text-primary" />
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <Phone className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Phone</p>
+                      <p className="text-muted-foreground">+92-309-3300668</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">Phone</p>
-                    <p className="text-muted-foreground">+92-309-3300668</p>
-                  </div>
-                </div>
 
-                <div className="flex items-center space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <MapPin className="h-5 w-5 text-primary" />
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <MapPin className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Location</p>
+                      <p className="text-muted-foreground">Karachi, Pakistan</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">Location</p>
-                    <p className="text-muted-foreground">Karachi, Pakistan</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Social Links */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Connect with me</CardTitle>
-                <CardDescription>Follow me on social media for updates and insights.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex space-x-4">
-                  <Button variant="outline" size="icon" asChild>
-                    <a href="https://github.com/Negatrin" target="_blank" rel="noopener noreferrer">
-                      <Github className="h-5 w-5" />
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="icon" asChild>
-                    <a
-                      href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="icon" asChild>
-                    <a href="mailto:mustufashadab123@gmail.com">
-                      <Mail className="h-5 w-5" />
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 to-purple-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+                <CardHeader>
+                  <CardTitle>Connect with me</CardTitle>
+                  <CardDescription>Follow me on social media for updates and insights.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex space-x-4">
+                    <Button variant="outline" size="icon" asChild>
+                      <a href="https://github.com/Negatrin" target="_blank" rel="noopener noreferrer">
+                        <Github className="h-5 w-5" />
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="icon" asChild>
+                      <a
+                        href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Linkedin className="h-5 w-5" />
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="icon" asChild>
+                      <a href="mailto:mustufashadab123@gmail.com">
+                        <Mail className="h-5 w-5" />
+                      </a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Availability */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Availability</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-sm">Available for freelance projects</span>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/15 to-pink-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+                <CardHeader>
+                  <CardTitle>Availability</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span className="text-sm">Available for freelance projects</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span className="text-sm">Open to collaboration</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <span className="text-sm">Currently studying at LUMS</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-sm">Open to collaboration</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <span className="text-sm">Currently studying at LUMS</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </motion.div>
         </div>
       </div>
