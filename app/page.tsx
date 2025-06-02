@@ -489,7 +489,7 @@ export default function Home() {
 											key={project.title} 
 											className={cn(
 												'px-2',
-												isMobileView ? 'basis-[90vw] max-w-[90vw] min-w-0' : 'basis-full md:basis-1/2 lg:basis-[45%] xl:basis-[40%] 2xl:basis-[35%]'
+												isMobileView ? 'basis-full max-w-full min-w-0' : 'basis-full md:basis-1/2 lg:basis-[45%] xl:basis-[40%] 2xl:basis-[35%]'
 											)}
 										>
 											<motion.div
@@ -566,15 +566,10 @@ export default function Home() {
 										</CarouselItem>
 									))}
 								</CarouselContent>
-								{/* Mobile arrows: grouped and centered below the cards, outside the card, only on mobile */}
+								{/* On mobile, show swipe hint instead of arrows */}
 								{isMobileView && (
-									<div className="flex justify-center gap-4 mt-3 mb-2">
-										<CarouselPrevious 
-											className="pointer-events-auto w-12 h-12 text-lg rounded-full bg-background/90 border border-primary/30 shadow-md" 
-										/>
-										<CarouselNext 
-											className="pointer-events-auto w-12 h-12 text-lg rounded-full bg-background/90 border border-primary/30 shadow-md" 
-										/>
+									<div className="w-full flex justify-center mt-3 mb-2">
+										<span className="text-muted-foreground text-sm">Swipe to see more projects →</span>
 									</div>
 								)}
 								{/* Desktop arrows: absolute sides, only on desktop */}
