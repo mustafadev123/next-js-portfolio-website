@@ -7,6 +7,12 @@ export const maxDuration = 30
 const PORTFOLIO_CONTEXT = `
 You are Muhammad Mustafa's AI portfolio assistant. You help visitors learn about Muhammad's background, projects, and skills.
 
+GREETING STYLE:
+- Always start responses with "Hello" (not "Hi", "Hey", or any other greeting)
+- When greeting users for the first time, highlight Muhammad as someone uniquely balancing academic excellence with industrial experience
+- Use phrases like "Have you met an undergraduate student who has balanced both academic life with industrial life? You've stumbled upon one of the few who have done it."
+- Keep an enthusiastic tone that showcases Muhammad's exceptional journey
+
 ABOUT MUHAMMAD MUSTAFA:
 - Software Engineer & ML Enthusiast
 - Currently studying BSc Computer Science at LUMS (GPA: 3.70, graduating June 2026)
@@ -97,7 +103,12 @@ export async function POST(req: Request) {
     // Check for simple greetings
     const isSimpleGreeting = /^(hi|hello|hey|greetings|howdy|hi there|hello there)$/i.test(message.trim());
 
-    // Check for project navigation requests
+    // Check for general projects page navigation
+    const generalProjectsRegex = /^(show|view|display|see|browse|take me to|navigate to|go to)(\s+me)?(\s+his|\s+the|\s+to|\s+through)?(\s+projects|\s+portfolio|\s+work|\s+all projects)$/i;
+    const alternateProjectsRegex = /^(what\s+projects|which\s+projects|list\s+projects|projects\s+list|all\s+projects).*$/i;
+    const isGeneralProjectsRequest = generalProjectsRegex.test(message.trim()) || alternateProjectsRegex.test(message.trim());
+    
+    // Check for specific project navigation requests
     const cropVisualizationRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*crop visualization\b/i;
     const mindSyncRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*mindsync\b/i;
     const nikeCloneRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*nike clone\b/i;
@@ -108,14 +119,19 @@ export async function POST(req: Request) {
     const multimodalRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*multimodal\b/i;
     
     // Detect which project is being requested
-    const isProjectRequest = cropVisualizationRegex.test(message) || mindSyncRegex.test(message) || 
-                            nikeCloneRegex.test(message) || sereneRegex.test(message) || 
-                            karachiRegex.test(message) || urduNewsRegex.test(message) || 
-                            tbDetectionRegex.test(message) || multimodalRegex.test(message);
+    const isSpecificProjectRequest = cropVisualizationRegex.test(message) || mindSyncRegex.test(message) || 
+                                    nikeCloneRegex.test(message) || sereneRegex.test(message) || 
+                                    karachiRegex.test(message) || urduNewsRegex.test(message) || 
+                                    tbDetectionRegex.test(message) || multimodalRegex.test(message);
+                                    
+    const isProjectRequest = isSpecificProjectRequest || isGeneralProjectsRequest;
     
     // Determine the specific project if it's a project request
     let projectName = "";
-    if (cropVisualizationRegex.test(message)) projectName = "Crop Visualization Platform";
+    if (isGeneralProjectsRequest) {
+      projectName = "Projects Page"; // Special case for general projects navigation
+    }
+    else if (cropVisualizationRegex.test(message)) projectName = "Crop Visualization Platform";
     else if (mindSyncRegex.test(message)) projectName = "MindSync";
     else if (nikeCloneRegex.test(message)) projectName = "Nike Clone";
     else if (sereneRegex.test(message)) projectName = "Serene Airlines";
@@ -130,8 +146,16 @@ ${conversationContext ? `Previous conversation:\n${conversationContext}\n` : ""}
 User's current question: ${message}
 
 ${isSimpleGreeting ? 
-    `This appears to be a simple greeting. Keep your response very brief, friendly and conversational. Just welcome the user in a personal tone, mention that you're Muhammad's AI assistant and ask how you can help.` 
-  : isProjectRequest ?
+    `This appears to be a simple greeting. Always start with "Hello" and introduce Muhammad as someone who uniquely balances both academic excellence and industrial experience. 
+    
+    Use one of these formats:
+    - "Hello! Have you met an undergraduate student who has balanced both academic life with industrial life? You've stumbled upon one of the few who have done it. Let me introduce you to Muhammad Mustafa..."
+    - "Hello there! Ever wondered how someone can excel in academics while gaining real industrial experience? Let me introduce you to Muhammad Mustafa, a rare talent balancing both worlds."
+    
+    Keep it brief, friendly and conversational. Mention that you're Muhammad's AI assistant and ask how you can help.` 
+  : isGeneralProjectsRequest ?
+    `The user is requesting to see all projects. Respond with: "I'll take you to the projects page! Click here to view all of Muhammad's projects." Make it clear that they will be immediately directed to the projects page.`
+  : isSpecificProjectRequest ?
     `The user is requesting to see the "${projectName}" project. Instead of describing the project in detail, instruct them to click on a special navigation link you're providing that will take them directly to the project. Your response should be short and action-oriented, like: "I'll take you to the ${projectName} project! Click here to view it on the projects page." Include the exact project name in your response and make it clear that they'll be directed to the projects page.`
   : `
 Please provide a helpful response about Muhammad Mustafa's portfolio, addressing their specific question directly. Remember to:

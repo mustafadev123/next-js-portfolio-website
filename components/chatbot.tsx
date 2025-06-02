@@ -45,7 +45,7 @@ export function Chatbot() {
       // Add welcome message when chatbot opens for the first time
       setTimeout(() => {
         addBotMessage(
-          "Hi! I'm Muhammad's AI assistant. I can help you navigate his portfolio, learn about his projects, skills, and experience. What would you like to know?",
+          "Hello! Have you met an undergraduate student who has balanced both academic life with industrial life? You've stumbled upon one of the few who have done it. I'm Muhammad's AI assistant, ready to help you explore his impressive journey, projects, and skills. What would you like to know?",
           ["Tell me about Muhammad", "Show me his projects", "What are his skills?", "Contact information"],
         )
       }, 500)
@@ -87,11 +87,24 @@ export function Chatbot() {
       // Only respond with a quick greeting for the first interaction
       setTimeout(() => {
         addBotMessage(
-          `Hey there! 👋 I'm Muhammad's AI assistant. How can I help you explore his portfolio today?`,
+          `Hello! Have you met an undergraduate student who has balanced both academic life with industrial life? You've stumbled upon one of the few who have done it. I'm Muhammad's AI assistant - how can I help you explore his impressive journey?`,
           ["Tell me about his projects", "What skills does he have?", "Show his work experience"]
         );
         setIsLoading(false);
       }, 500);
+      return;
+    }
+    
+    // Handle direct "show projects" requests for immediate navigation
+    const showProjectsRegex = /^(show|view|display|see|browse|take me to|navigate to|go to)(\s+me)?(\s+his|\s+the|\s+to|\s+through)?(\s+projects|\s+portfolio|\s+work|\s+all projects)$/i;
+    const alternateProjectsRegex = /^(what\s+projects|which\s+projects|list\s+projects|projects\s+list|all\s+projects).*$/i;
+    
+    if (showProjectsRegex.test(userMessage.trim()) || alternateProjectsRegex.test(userMessage.trim())) {
+      addBotMessage("Hello! I'll take you to the projects page right away! 🚀");
+      setTimeout(() => {
+        router.push("/projects");
+      }, 500);
+      setIsLoading(false);
       return;
     }
 
@@ -117,11 +130,26 @@ export function Chatbot() {
       const data = await response.json();
       console.log("API response received");
 
-      // Check if this is a project navigation response
+      // Check if this is a navigation response
       const lowerResponse = data.response.toLowerCase();
       
-      // Extract project name from response if it's a project navigation instruction
-      const projectNavigationRegex = /take you to the (.+?) project|view the (.+?) project|showing you the (.+?) project/i;
+      // Check for general projects page navigation
+      if (lowerResponse.includes("take you to the projects page") || 
+          lowerResponse.includes("click here to view all of muhammad's projects") ||
+          lowerResponse.includes("i'll take you to the projects page") ||
+          lowerResponse.includes("directing you to the projects page") ||
+          (lowerResponse.includes("project") && lowerResponse.includes("page") && 
+           (lowerResponse.includes("take") || lowerResponse.includes("direct") || 
+            lowerResponse.includes("show") || lowerResponse.includes("view")))) {
+        addBotMessage("Hello! I'll take you to the projects page right away! 🚀");
+        setTimeout(() => {
+          router.push("/projects");
+        }, 1000);
+        return;
+      }
+      
+      // Extract project name from response if it's a specific project navigation instruction
+      const projectNavigationRegex = /(?:take you to|view|showing you|directing you to|navigating to|opening) the (.+?) project|(.+?) project (?:page|details|overview)/i;
       const projectMatch = data.response.match(projectNavigationRegex);
       
       if (projectMatch) {
@@ -195,7 +223,9 @@ export function Chatbot() {
     addUserMessage(suggestion)
 
     // Handle navigation suggestions
-    if (suggestion.toLowerCase().includes("view all projects") || suggestion.toLowerCase().includes("view projects")) {
+    if (suggestion.toLowerCase().includes("view all projects") || suggestion.toLowerCase().includes("view projects") || 
+        suggestion.toLowerCase().includes("show me his projects") || suggestion.toLowerCase() === "projects" ||
+        suggestion.toLowerCase() === "show his projects" || suggestion.toLowerCase() === "show projects") {
       router.push("/projects")
       addBotMessage("Taking you to the projects page! 🚀")
     } else if (suggestion.toLowerCase().includes("about") || suggestion.toLowerCase().includes("muhammad")) {

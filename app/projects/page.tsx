@@ -136,11 +136,33 @@ export default function Projects() {
 				setTimeout(() => {
 					const projectElement = document.getElementById(`project-${matchedProject.title.replace(/\s+/g, '-').toLowerCase()}`);
 					if (projectElement) {
-						projectElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+						// Scroll with offset to account for fixed header
+						const headerOffset = 100;
+						const elementPosition = projectElement.getBoundingClientRect().top;
+						const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+						
+						// Scroll to the element position
+						window.scrollTo({
+							top: offsetPosition,
+							behavior: "smooth"
+						});
+						
+						// Add highlighting effect
 						projectElement.classList.add('highlight-project');
-						setTimeout(() => projectElement.classList.remove('highlight-project'), 2000);
+						
+						// Remove the highlight class after animation completes
+						setTimeout(() => {
+							projectElement.classList.remove('highlight-project');
+							
+							// Add a subtle persistent highlight
+							projectElement.style.boxShadow = '0 0 10px rgba(79, 70, 229, 0.3)';
+							setTimeout(() => {
+								projectElement.style.transition = 'box-shadow 0.5s ease';
+								projectElement.style.boxShadow = 'none';
+							}, 3000);
+						}, 2000);
 					}
-				}, 300);
+				}, 800);
 			}
 		}
 	}, []);
