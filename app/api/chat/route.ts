@@ -68,7 +68,9 @@ Keep responses helpful, concise, and focused on Muhammad's portfolio. If asked a
 
 export async function POST(req: Request) {
   try {
+    console.log("Chat API: Request received")
     const { message, conversationHistory } = await req.json()
+    console.log("Chat API: Message received:", message.substring(0, 50) + (message.length > 50 ? "..." : ""))
 
     // Store conversation in Redis for analytics (optional)
     try {
@@ -92,26 +94,33 @@ export async function POST(req: Request) {
         .join("\n")
     }
 
+    // Check for simple greetings
+    const isSimpleGreeting = /^(hi|hello|hey|greetings|howdy|hi there|hello there)$/i.test(message.trim());
+
     const prompt = `${PORTFOLIO_CONTEXT}
 
 ${conversationContext ? `Previous conversation:\n${conversationContext}\n` : ""}
 
 User's current question: ${message}
 
-Please provide a helpful response about Muhammad Mustafa's portfolio. If the user asks about:
-- Projects: Mention specific projects with brief descriptions
-- Skills: List relevant technical skills
-- Experience: Highlight work experience and achievements
-- Contact: Provide contact information
-- Navigation: Guide them to appropriate sections
+${isSimpleGreeting ? `This appears to be a simple greeting. Keep your response very brief, friendly and conversational. Just welcome the user in a personal tone, mention that you're Muhammad's AI assistant and ask how you can help.` : `
+Please provide a helpful response about Muhammad Mustafa's portfolio, addressing their specific question directly. Remember to:
+- Keep responses conversational and personalized, avoid generic templates
+- Be concise and natural, as if you're having a real conversation
+- Only mention relevant information that directly answers their question
+- If they ask about projects, only highlight the most relevant ones for their query
+- Use a friendly, warm tone that reflects Muhammad's personality
+- For simple greetings, keep responses very brief and ask how you can help
+`}
 
-Keep responses conversational, informative, and under 200 words.`
+Keep responses under 150 words unless a detailed explanation is specifically requested.`
 
+    console.log("Chat API: Sending prompt to Groq")
     const result = await generateText({
       model: groq("llama-3.1-8b-instant"),
       prompt,
-      maxTokens: 300,
-      temperature: 0.7,
+      maxTokens: isSimpleGreeting ? 150 : 300,
+      temperature: isSimpleGreeting ? 0.5 : 0.65, // Lower temperature for more focused responses
     })
 
     return Response.json({
@@ -120,11 +129,24 @@ Keep responses conversational, informative, and under 200 words.`
     })
   } catch (error) {
     console.error("Chat API error:", error)
+    
+    // Try to provide more specific error information
+    let errorMessage = "I'm having trouble connecting right now. You can explore Muhammad's portfolio using the navigation menu above, or try asking me again in a moment!";
+    
+    if (error instanceof Error) {
+      console.error(`Error type: ${error.name}, Message: ${error.message}`);
+      
+      // Check for specific error types
+      if (error.message.includes("network")) {
+        errorMessage = "I'm having network issues connecting to my AI service. This might be because you're running this locally without proper credentials. Please try again later!";
+      }
+    }
+    
     return Response.json(
       {
         error: "Failed to generate response",
-        response:
-          "I'm having trouble connecting right now. You can explore Muhammad's portfolio using the navigation menu above, or try asking me again in a moment!",
+        errorDetails: error instanceof Error ? error.message : "Unknown error",
+        response: errorMessage,
       },
       { status: 500 },
     )

@@ -34,8 +34,8 @@ export default function Contact() {
   }
 
   return (
-    <div className="min-h-screen pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div className="min-h-screen pt-16 flex flex-col">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex-1 flex flex-col">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -49,23 +49,24 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 flex-1">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
+            className="flex h-full"
           >
-            <div className="relative">
+            <div className="relative flex-1 flex flex-col">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
-              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
+              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10 flex flex-col">
                 <CardHeader>
                   <CardTitle>Send me a message</CardTitle>
                   <CardDescription>Fill out the form below and I'll get back to you as soon as possible.</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                <CardContent className="flex-1 flex flex-col">
+                  <form onSubmit={handleSubmit} className="space-y-6 flex flex-col flex-1">
                     <div className="space-y-2">
                       <Label htmlFor="name">Name</Label>
                       <Input
@@ -92,20 +93,20 @@ export default function Contact() {
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex-1 flex flex-col">
                       <Label htmlFor="message">Message</Label>
                       <Textarea
                         id="message"
                         name="message"
                         placeholder="Tell me about your project or just say hello!"
-                        rows={6}
+                        className="flex-1 min-h-[200px]"
                         value={formData.message}
                         onChange={handleChange}
                         required
                       />
                     </div>
 
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full mt-auto">
                       <Send className="mr-2 h-4 w-4" />
                       Send Message
                     </Button>

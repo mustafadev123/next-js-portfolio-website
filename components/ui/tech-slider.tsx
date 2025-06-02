@@ -5,8 +5,8 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 
 interface Technology {
-  name: string;
-  logo: string;
+  name: string
+  logo: string
 }
 
 const technologies: Technology[] = [
@@ -22,8 +22,12 @@ const technologies: Technology[] = [
   { name: "MySQL", logo: "/my_sql.png" },
 ]
 
-// We triple the list so it loops seamlessly
-const extendedTechnologies = [...technologies, ...technologies, ...technologies]
+// Triple the list so it loops seamlessly
+const extendedTechnologies = [
+  ...technologies,
+  ...technologies,
+  ...technologies,
+]
 
 export function TechSlider({ className = "" }: { className?: string }) {
   return (
@@ -33,17 +37,7 @@ export function TechSlider({ className = "" }: { className?: string }) {
         className
       }
     >
-      {/* ← Removed the Left Gradient Overlay */}
-      {/* <div className="absolute left-0 top-0 bottom-0 w-20 
-          bg-gradient-to-r from-white to-transparent 
-          dark:from-gray-900 dark:to-transparent 
-          z-10" /> */}
-
-      {/* ← Removed the Right Gradient Overlay */}
-      {/* <div className="absolute right-0 top-0 bottom-0 w-20
-          bg-gradient-to-l from-white to-transparent
-          dark:from-gray-900 dark:to-transparent
-          z-10" /> */}      <motion.div
+      <motion.div
         className="flex"
         animate={{ x: [0, -200 * technologies.length] }}
         transition={{
@@ -58,15 +52,28 @@ export function TechSlider({ className = "" }: { className?: string }) {
         {extendedTechnologies.map((tech, index) => (
           <div
             key={index}
-            className="w-[200px] md:w-[240px] flex-shrink-0 flex items-center justify-center h-full bg-transparent"
+            className="w-[200px] md:w-[240px] flex-shrink-0 flex items-center justify-center h-full"
           >
-            <div className="relative w-32 md:w-40 h-16 md:h-20 bg-[#0c101b] flex items-center justify-center">
+            {/* 
+              - Light mode: bg-white (or transparent over white body) + no blend, so black logos appear.
+              - Dark mode: bg-[#0c101b] + mix-blend-lighten, so only white parts of the PNG show.
+            */}            <div
+              className={`
+                relative w-28 md:w-36 h-14 md:h-18
+                bg-white           /* Light mode: white background */
+                dark:bg-[#0c101b]  /* Dark mode: #0c101b background */
+                flex items-center justify-center
+              `}
+            >
               <Image
                 src={tech.logo}
                 alt={tech.name}
                 fill
                 style={{ objectFit: "contain" }}
-                className="mix-blend-lighten"
+                className={`
+                  /* Light: no blend => show black on white */
+                  dark:mix-blend-lighten  /* Dark: only white parts appear */
+                `}
               />
             </div>
           </div>

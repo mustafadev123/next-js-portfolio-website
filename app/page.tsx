@@ -476,7 +476,7 @@ export default function Home() {
 									align: "center",
 									startIndex: Math.floor(featuredProjects.length / 2),
 									// Adjust dragging behavior based on screen size
-									dragFree: !isMobileView,
+									dragFree: false, // Changed from !isMobileView
 									// Fine-tune carousel behavior for different screen sizes
 									containScroll: isMobileView ? "trimSnaps" : "keepSnaps"
 								}}

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useRouter } from "next/navigation"
+import { getFallbackResponse } from "@/lib/chatbot-fallbacks"
 
 interface Message {
   id: string
@@ -80,7 +81,22 @@ export function Chatbot() {
     setInputValue("")
     setIsLoading(true)
 
+    // Handle simple greetings directly on the client side for immediate response
+    const simpleGreetings = /^(hi|hello|hey|greetings|howdy|hi there|hello there)$/i;
+    if (simpleGreetings.test(userMessage.trim()) && messages.length <= 1) {
+      // Only respond with a quick greeting for the first interaction
+      setTimeout(() => {
+        addBotMessage(
+          `Hey there! 👋 I'm Muhammad's AI assistant. How can I help you explore his portfolio today?`,
+          ["Tell me about his projects", "What skills does he have?", "Show his work experience"]
+        );
+        setIsLoading(false);
+      }, 500);
+      return;
+    }
+
     try {
+      console.log("Sending message to API:", userMessage);
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
@@ -90,40 +106,69 @@ export function Chatbot() {
           message: userMessage,
           conversationHistory: messages.slice(-5), // Send last 5 messages for context
         }),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to get response")
+        const errorData = await response.json().catch(() => ({}));
+        console.error("API error response:", errorData);
+        throw new Error(`Failed to get response: ${response.status} ${response.statusText}`);
       }
 
-      const data = await response.json()
+      const data = await response.json();
+      console.log("API response received");
 
-      // Check if the response suggests navigation
-      const lowerResponse = data.response.toLowerCase()
-      const suggestions: string[] = []
+      // Intelligently generate suggestions based on the response content
+      const lowerResponse = data.response.toLowerCase();
+      const suggestions: string[] = [];
 
-      if (lowerResponse.includes("project")) {
-        suggestions.push("View all projects", "AI/ML projects", "Web development")
+      // More targeted suggestion matching
+      if (userMessage.toLowerCase().includes("project") || lowerResponse.includes("project")) {
+        suggestions.push("Tell me more about MindSync", "Show the Crop Visualization project", "What are his AI projects?");
       }
-      if (lowerResponse.includes("contact") || lowerResponse.includes("reach")) {
-        suggestions.push("Contact information", "Send message", "Social links")
+      if (userMessage.toLowerCase().includes("contact") || lowerResponse.includes("contact") || lowerResponse.includes("reach") || lowerResponse.includes("email")) {
+        suggestions.push("How can I contact Muhammad?", "What's his LinkedIn profile?", "Send an email");
       }
-      if (lowerResponse.includes("skill") || lowerResponse.includes("experience")) {
-        suggestions.push("Technical skills", "Work experience", "Education")
+      if (userMessage.toLowerCase().includes("skill") || lowerResponse.includes("skill") || lowerResponse.includes("technology") || lowerResponse.includes("tech stack")) {
+        suggestions.push("What programming languages does he know?", "Tell me about his ML skills", "Frontend or backend?");
       }
-      if (lowerResponse.includes("about") || lowerResponse.includes("background")) {
-        suggestions.push("Full biography", "Education details", "Career journey")
+      if (userMessage.toLowerCase().includes("about") || lowerResponse.includes("about") || lowerResponse.includes("background") || lowerResponse.includes("education")) {
+        suggestions.push("Where did he study?", "What's his background?", "Tell me more about his education");
       }
 
-      addBotMessage(data.response, suggestions.length > 0 ? suggestions : undefined)
+      addBotMessage(data.response, suggestions.length > 0 ? suggestions : undefined);
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error in chat request:", error);
+      
+      // Use local fallback system if API is unavailable
+      try {
+        console.log("Using fallback response system");
+        const fallbackResponse = getFallbackResponse(userMessage);
+        addBotMessage(
+          fallbackResponse.text,
+          fallbackResponse.suggestions
+        );
+        return;
+      } catch (fallbackError) {
+        console.error("Fallback system error:", fallbackError);
+      }
+      
+      // If fallback system also fails, show a generic error
+      let errorMessage = "I apologize, but I'm having trouble connecting to my AI service right now.";
+      
+      if (error instanceof Error) {
+        if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+          errorMessage = "I'm having network issues connecting to the AI service. If you're running this locally, this might be because the API key isn't configured correctly.";
+        } else {
+          errorMessage = "I encountered an error while processing your request. Please try again in a moment.";
+        }
+      }
+      
       addBotMessage(
-        "I apologize, but I'm having trouble connecting right now. You can still navigate the portfolio using the menu above or ask me about Muhammad's projects, skills, or contact information.",
+        `${errorMessage} You can still navigate Muhammad's portfolio using the menu or try these options:`,
         ["View Projects", "About Muhammad", "Contact Info"],
-      )
+      );
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -188,10 +233,12 @@ export function Chatbot() {
                   <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
                     <Bot className="h-4 w-4 text-white" />
                   </div>
-                  <span>AI Portfolio Assistant</span>
+                  <span>Portfolio Assistant</span>
                   <div className="flex items-center space-x-1 ml-auto">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-xs text-muted-foreground">Powered by Groq</span>
+                    <span className="text-xs text-muted-foreground">
+                      {isLoading ? "Thinking..." : "Powered by Groq"}
+                    </span>
                   </div>
                 </CardTitle>
               </CardHeader>
