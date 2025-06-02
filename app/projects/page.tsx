@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import "./highlight.css"
 
 const projects = [
 	{
@@ -109,6 +111,39 @@ export default function Projects() {
 	const [searchTerm, setSearchTerm] = useState("")
 	const { scrollYProgress } = useScroll()
 	const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
+	const router = useRouter()
+
+	// Handle URL query parameters for direct project navigation
+	useEffect(() => {
+		// Check if we have a project name in the URL
+		const queryParams = new URLSearchParams(window.location.search);
+		const projectParam = queryParams.get('project');
+		
+		if (projectParam) {
+			// Find the project by partial name match
+			const matchedProject = projects.find(project => 
+				project.title.toLowerCase().includes(projectParam.toLowerCase())
+			);
+			
+			if (matchedProject) {
+				// Clear the URL parameter without reloading the page
+				window.history.replaceState({}, '', '/projects');
+				
+				// Set filter to match this project's category and scroll to it
+				setSelectedCategory(matchedProject.category);
+				
+				// Add a small delay to ensure state updates before scrolling
+				setTimeout(() => {
+					const projectElement = document.getElementById(`project-${matchedProject.title.replace(/\s+/g, '-').toLowerCase()}`);
+					if (projectElement) {
+						projectElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+						projectElement.classList.add('highlight-project');
+						setTimeout(() => projectElement.classList.remove('highlight-project'), 2000);
+					}
+				}, 300);
+			}
+		}
+	}, []);
 
 	const filteredProjects = projects.filter((project) => {
 		const matchesCategory = selectedCategory === "All" || project.category === selectedCategory
@@ -208,6 +243,7 @@ export default function Projects() {
 								.filter((project) => project.featured)
 								.map((project, index) => (
 									<motion.div
+										id={`project-${project.title.replace(/\s+/g, '-').toLowerCase()}`}
 										key={project.title}
 										initial={{ opacity: 0, y: 20 }}
 										whileInView={{ opacity: 1, y: 0 }}
@@ -301,6 +337,7 @@ export default function Projects() {
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 							{filteredProjects.map((project, index) => (
 								<motion.div
+									id={`project-${project.title.replace(/\s+/g, '-').toLowerCase()}`}
 									key={project.title}
 									initial={{ opacity: 0, y: 20 }}
 									whileInView={{ opacity: 1, y: 0 }}

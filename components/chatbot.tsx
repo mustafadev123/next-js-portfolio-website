@@ -117,8 +117,27 @@ export function Chatbot() {
       const data = await response.json();
       console.log("API response received");
 
-      // Intelligently generate suggestions based on the response content
+      // Check if this is a project navigation response
       const lowerResponse = data.response.toLowerCase();
+      
+      // Extract project name from response if it's a project navigation instruction
+      const projectNavigationRegex = /take you to the (.+?) project|view the (.+?) project|showing you the (.+?) project/i;
+      const projectMatch = data.response.match(projectNavigationRegex);
+      
+      if (projectMatch) {
+        // Extract the project name from the first capturing group that matches
+        const projectName = projectMatch[1] || projectMatch[2] || projectMatch[3];
+        if (projectName) {
+          // Add a short delay to show the bot message before navigating
+          addBotMessage(`Taking you to the ${projectName} project! 🚀`);
+          setTimeout(() => {
+            router.push(`/projects?project=${encodeURIComponent(projectName.toLowerCase())}`);
+          }, 1000);
+          return;
+        }
+      }
+      
+      // Intelligently generate suggestions based on the response content
       const suggestions: string[] = [];
 
       // More targeted suggestion matching

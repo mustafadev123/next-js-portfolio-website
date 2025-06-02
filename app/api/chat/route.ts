@@ -97,13 +97,43 @@ export async function POST(req: Request) {
     // Check for simple greetings
     const isSimpleGreeting = /^(hi|hello|hey|greetings|howdy|hi there|hello there)$/i.test(message.trim());
 
+    // Check for project navigation requests
+    const cropVisualizationRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*crop visualization\b/i;
+    const mindSyncRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*mindsync\b/i;
+    const nikeCloneRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*nike clone\b/i;
+    const sereneRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*serene airlines\b/i;
+    const karachiRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*karachi city\b/i;
+    const urduNewsRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*urdu news\b/i;
+    const tbDetectionRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*tb detection\b/i;
+    const multimodalRegex = /\b(show|tell me about|view|open|navigate to|go to|display).*multimodal\b/i;
+    
+    // Detect which project is being requested
+    const isProjectRequest = cropVisualizationRegex.test(message) || mindSyncRegex.test(message) || 
+                            nikeCloneRegex.test(message) || sereneRegex.test(message) || 
+                            karachiRegex.test(message) || urduNewsRegex.test(message) || 
+                            tbDetectionRegex.test(message) || multimodalRegex.test(message);
+    
+    // Determine the specific project if it's a project request
+    let projectName = "";
+    if (cropVisualizationRegex.test(message)) projectName = "Crop Visualization Platform";
+    else if (mindSyncRegex.test(message)) projectName = "MindSync";
+    else if (nikeCloneRegex.test(message)) projectName = "Nike Clone";
+    else if (sereneRegex.test(message)) projectName = "Serene Airlines";
+    else if (karachiRegex.test(message)) projectName = "Karachi City Guide";
+    else if (urduNewsRegex.test(message) || message.toLowerCase().includes("urdu news")) projectName = "Urdu News Classification";
+    else if (tbDetectionRegex.test(message) || multimodalRegex.test(message)) projectName = "Multimodal TB Detection";
+
     const prompt = `${PORTFOLIO_CONTEXT}
 
 ${conversationContext ? `Previous conversation:\n${conversationContext}\n` : ""}
 
 User's current question: ${message}
 
-${isSimpleGreeting ? `This appears to be a simple greeting. Keep your response very brief, friendly and conversational. Just welcome the user in a personal tone, mention that you're Muhammad's AI assistant and ask how you can help.` : `
+${isSimpleGreeting ? 
+    `This appears to be a simple greeting. Keep your response very brief, friendly and conversational. Just welcome the user in a personal tone, mention that you're Muhammad's AI assistant and ask how you can help.` 
+  : isProjectRequest ?
+    `The user is requesting to see the "${projectName}" project. Instead of describing the project in detail, instruct them to click on a special navigation link you're providing that will take them directly to the project. Your response should be short and action-oriented, like: "I'll take you to the ${projectName} project! Click here to view it on the projects page." Include the exact project name in your response and make it clear that they'll be directed to the projects page.`
+  : `
 Please provide a helpful response about Muhammad Mustafa's portfolio, addressing their specific question directly. Remember to:
 - Keep responses conversational and personalized, avoid generic templates
 - Be concise and natural, as if you're having a real conversation
