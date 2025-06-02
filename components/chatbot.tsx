@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useRouter } from "next/navigation"
 import { getFallbackResponse } from "@/lib/chatbot-fallbacks"
+import { projects } from "@/lib/projects-data"
 
 interface Message {
   id: string
@@ -219,25 +220,55 @@ export function Chatbot() {
     }
   }
 
+  const projectTitles = [
+    "MindSync - Mental Health Platform",
+    "Crop Visualization Platform",
+    "Nike Clone E-commerce",
+    "Serene Airlines Website",
+    "Karachi City Guide",
+    "Urdu News Classification",
+    "Multimodal TB Detection"
+  ];
+
   const handleSuggestionClick = (suggestion: string) => {
     addUserMessage(suggestion)
 
     // Handle navigation suggestions
-    if (suggestion.toLowerCase().includes("view all projects") || suggestion.toLowerCase().includes("view projects") || 
-        suggestion.toLowerCase().includes("show me his projects") || suggestion.toLowerCase() === "projects" ||
-        suggestion.toLowerCase() === "show his projects" || suggestion.toLowerCase() === "show projects") {
+    const lowerSuggestion = suggestion.toLowerCase();
+    if (
+      lowerSuggestion.includes("view all projects") ||
+      lowerSuggestion.includes("view projects") ||
+      lowerSuggestion.includes("show me his projects") ||
+      lowerSuggestion === "projects" ||
+      lowerSuggestion === "show his projects" ||
+      lowerSuggestion === "show projects"
+    ) {
       router.push("/projects")
       addBotMessage("Taking you to the projects page! 🚀")
-    } else if (suggestion.toLowerCase().includes("about") || suggestion.toLowerCase().includes("muhammad")) {
+    } else if (lowerSuggestion.includes("about") || lowerSuggestion.includes("muhammad")) {
       router.push("/about")
       addBotMessage("Navigating to the about page! 👨‍💻")
-    } else if (suggestion.toLowerCase().includes("contact")) {
+    } else if (lowerSuggestion.includes("contact")) {
       router.push("/contact")
       addBotMessage("Opening the contact page! 📧")
     } else {
-      // For other suggestions, send as a regular message
-      setInputValue(suggestion)
-      setTimeout(() => handleSendMessage(), 100)
+      // Dynamically check if suggestion matches a project name from the imported projects array
+      const matchedProject = projects.find(project => {
+        // Accept both full and partial matches (e.g. "MindSync")
+        return lowerSuggestion.includes(project.title.toLowerCase().split(" - ")[0]);
+      });
+      if (matchedProject) {
+        // Extract the main project name for the query param
+        const projectParam = matchedProject.title.split(" - ")[0].toLowerCase();
+        addBotMessage(`Taking you to the ${matchedProject.title} project! 🚀`);
+        setTimeout(() => {
+          router.push(`/projects?project=${encodeURIComponent(projectParam)}`);
+        }, 1000);
+      } else {
+        // For other suggestions, send as a regular message
+        setInputValue(suggestion)
+        setTimeout(() => handleSendMessage(), 100)
+      }
     }
   }
 

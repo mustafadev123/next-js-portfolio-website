@@ -1,0 +1,92 @@
+// Centralized export of the projects array for use in both the projects page and chatbot
+export const projects = [
+  {
+    title: "MindSync - Mental Health Platform",
+    description:
+      "A comprehensive mental health platform connecting users with therapists, featuring secure authentication and role-based access for both patients and practitioners.",
+    image: "/mind_sync.png",
+    technologies: [
+      "React",
+      "Authentication",
+      "Healthcare",
+      "User Management",
+      "Responsive Design",
+    ],
+    category: "Healthcare",
+    liveUrl: "https://sedeploy-2.vercel.app/",
+    githubUrl: null,
+    featured: true,
+    // year: "2024",
+  },
+  {
+    title: "Crop Visualization Platform",
+    description:
+      "Interactive map with satellite imagery and NDVI overlays for crop-health monitoring using geospatial analysis.",
+    image: "/crop_visualization.png",
+    technologies: ["React", "Satellite Imagery", "NDVI", "Geospatial Analysis", "Maps"],
+    category: "Agriculture",
+    liveUrl: "https://satellite-portal-crop.vercel.app/",
+    githubUrl: null,
+    featured: true,
+    // year: "2024",
+  },
+  {
+    title: "Nike Clone E-commerce",
+    description:
+      "Responsive e-commerce frontend with product gallery, advanced filtering, and interactive cart functionality.",
+    image: "/nike_clone.png",
+    technologies: ["React", "Tailwind CSS", "E-commerce", "Responsive Design", "Cart Management"],
+    category: "E-commerce",
+    liveUrl: "https://project-2-delta-mauve.vercel.app/",
+    githubUrl: null,
+    featured: true,
+    // year: "2024",
+  },
+  {
+    title: "Serene Airlines Website",
+    description: "Professional airline booking UI with dynamic search widget, booking flow, and responsive design.",
+    image: "/serene_pic.png",
+    technologies: ["React", "UI/UX", "Booking System", "Dynamic Search", "Travel"],
+    category: "Travel",
+    liveUrl: "https://sereneair.com/",
+    githubUrl: null,
+    featured: false,
+    // year: "2024",
+  },
+  {
+    title: "Karachi City Guide",
+    description:
+      "Tourism portal featuring interactive maps, event listings, and comprehensive guide content for Karachi.",
+    image: "/khi_pic.png",
+    technologies: ["React", "Interactive Maps", "Tourism", "Event Management", "CMS"],
+    category: "Tourism",
+    liveUrl: "https://www.click.gos.pk/",
+    githubUrl: null,
+    featured: true,
+    // year: "2023",
+  },
+  {
+    title: "Urdu News Classification",
+    description:
+      "Machine learning pipeline achieving 98% accuracy in classifying Urdu news articles using advanced NLP techniques.",
+    image: "/github_logo.png",
+    technologies: ["Python", "Machine Learning", "NLP", "Multinomial Naive Bayes", "Text Processing"],
+    category: "AI/ML",
+    liveUrl: null,
+    githubUrl: "https://github.com/ha405/Urdu-News-Classification-with-ML",
+    featured: true,
+    // year: "2023",
+  },
+  {
+    title: "Multimodal TB Detection",
+    description:
+      "Explainable AI system using vision transformers and symptom scoring to detect tuberculosis with LIME-based insights.",
+    image: "/github_logo.png",
+    technologies: ["Python", "Vision Transformers", "Explainable AI", "Medical AI", "LIME"],
+    category: "AI/ML",
+    liveUrl: null,
+    githubUrl: "https://github.com/Negatrin/Mutlimodal_tb_detection/",
+    featured: true,
+    // year: "2023",
+  },
+];
