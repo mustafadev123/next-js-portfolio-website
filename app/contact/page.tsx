@@ -3,36 +3,11 @@
 import type React from "react"
 
 import { motion } from "framer-motion"
-import { useState } from "react"
-import { Mail, Phone, MapPin, Github, Linkedin, Send } from "lucide-react"
+import { Mail, Phone, MapPin, Github, Linkedin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log("Form submitted:", formData)
-    // Reset form
-    setFormData({ name: "", email: "", message: "" })
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
   return (
     <div className="min-h-screen pt-16 flex flex-col">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex-1 flex flex-col">
@@ -50,7 +25,7 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 flex-1">
-          {/* Contact Form */}
+          {/* Left: Send me an Email */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -59,64 +34,39 @@ export default function Contact() {
             className="flex h-full"
           >
             <div className="relative flex-1 flex flex-col">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
-              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10 flex flex-col">
-                <CardHeader>
-                  <CardTitle>Send me a message</CardTitle>
-                  <CardDescription>Fill out the form below and I'll get back to you as soon as possible.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                  <form onSubmit={handleSubmit} className="space-y-6 flex flex-col flex-1">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        type="text"
-                        placeholder="Your name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="your.email@example.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2 flex-1 flex flex-col">
-                      <Label htmlFor="message">Message</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        placeholder="Tell me about your project or just say hello!"
-                        className="flex-1 min-h-[200px]"
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-
-                    <Button type="submit" className="w-full mt-auto">
-                      <Send className="mr-2 h-4 w-4" />
-                      Send Message
-                    </Button>
-                  </form>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]" />
+              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10 flex flex-col justify-between">
+                <div>
+                  <CardHeader>
+                    <CardTitle>Send me an Email</CardTitle>
+                    <CardDescription>
+                      Click the button below to open your email client and send me a message directly.
+                    </CardDescription>
+                  </CardHeader>
+                </div>
+                {/* Friendly message and large envelope icon in the middle */}
+                <div className="flex flex-col items-center justify-center flex-1">
+                  <Mail className="h-16 w-16 text-primary/60 mb-4 animate-pulse" />
+                  <span className="text-muted-foreground text-lg text-center">Let's build something amazing together!</span>
+                </div>
+                <CardContent className="flex flex-col items-center justify-end pb-8 flex-1 w-full">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="flex items-center gap-2 text-lg px-6 py-3 w-full mt-4"
+                    variant="default"
+                  >
+                    <a href="mailto:mustufashadab123@gmail.com">
+                      <Mail className="h-6 w-6" />
+                      Email
+                    </a>
+                  </Button>
                 </CardContent>
               </Card>
             </div>
           </motion.div>
 
-          {/* Contact Information */}
+          {/* Right: Info cards stacked */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -126,7 +76,7 @@ export default function Contact() {
           >
             {/* Contact Details */}
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]" />
               <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
                 <CardHeader>
                   <CardTitle>Contact Information</CardTitle>
@@ -165,10 +115,9 @@ export default function Contact() {
                 </CardContent>
               </Card>
             </div>
-
             {/* Social Links */}
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 to-purple-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 to-purple-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]" />
               <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
                 <CardHeader>
                   <CardTitle>Connect with me</CardTitle>
@@ -182,11 +131,7 @@ export default function Contact() {
                       </a>
                     </Button>
                     <Button variant="outline" size="icon" asChild>
-                      <a
-                        href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <a href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/" target="_blank" rel="noopener noreferrer">
                         <Linkedin className="h-5 w-5" />
                       </a>
                     </Button>
@@ -199,10 +144,9 @@ export default function Contact() {
                 </CardContent>
               </Card>
             </div>
-
             {/* Availability */}
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/15 to-pink-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/15 to-pink-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]" />
               <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
                 <CardHeader>
                   <CardTitle>Availability</CardTitle>
@@ -210,15 +154,15 @@ export default function Contact() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full" />
                       <span className="text-sm">Available for freelance projects</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full" />
                       <span className="text-sm">Open to collaboration</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full" />
                       <span className="text-sm">Currently studying at LUMS</span>
                     </div>
                   </div>

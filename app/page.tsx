@@ -468,54 +468,44 @@ export default function Home() {
 						<p className="text-muted-foreground">A glimpse of my best work</p>
 					</motion.div>
 					<div className="w-full flex flex-col items-center">
-						<div className="w-full perspective-1000">
+						<div className="w-full perspective-1000 relative">
 							<Carousel 
 								setApi={setCarouselApi}
 								opts={{
 									loop: true,
 									align: "center",
 									startIndex: Math.floor(featuredProjects.length / 2),
-									// Adjust dragging behavior based on screen size
-									dragFree: false, // Changed from !isMobileView
-									// Fine-tune carousel behavior for different screen sizes
+									dragFree: false,
 									containScroll: isMobileView ? "trimSnaps" : "keepSnaps"
 								}}
 								className="relative w-full"
 							>
-								{/* Re-added left/right arrows */}
-								<CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-foreground bg-background hover:bg-primary/10" />
-								<CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-foreground bg-background hover:bg-primary/10" />
 								<CarouselContent className={cn(
-									"flex items-center",
-									isMobileView ? "py-4" : "py-12" // More space on desktop for the 3D effect
+									'flex items-center',
+									isMobileView ? 'py-4 overflow-visible' : 'py-12'
 								)}>
 									{featuredProjects.map((project, idx) => (
 										<CarouselItem 
 											key={project.title} 
-											// Consistent basis classes across breakpoints
-											className="px-2 basis-full md:basis-1/2 lg:basis-[45%] xl:basis-[40%] 2xl:basis-[35%]"
+											className={cn(
+												'px-2',
+												isMobileView ? 'basis-[90vw] max-w-[90vw] min-w-0' : 'basis-full md:basis-1/2 lg:basis-[45%] xl:basis-[40%] 2xl:basis-[35%]'
+											)}
 										>
 											<motion.div
 												className="transform-gpu cursor-pointer"
 												onClick={() => {
 													if (carouselApi && idx !== selected) {
-														// Always use animation for a smoother experience
-														// but adjust timing based on screen size
 														const animated = true;
 														carouselApi.scrollTo(idx, animated);
-														// Manually update the selected state for immediate feedback
 														setSelected(idx);
 													}
 												}}
 												animate={{
-													scale: idx === selected ? 1.1 : 0.85,
-													// Adjust rotation angle based on screen size
-													rotateY: idx === selected ? 0 : (idx - selected) * (isMobileView ? 15 : 8),
-													// Higher z-index for selected card
+													scale: idx === selected ? 1.05 : (isMobileView ? 0.95 : 0.85),
+													rotateY: idx === selected ? 0 : (idx - selected) * (isMobileView ? 12 : 8),
 													zIndex: idx === selected ? 10 : 1,
-													// Enhance brightness difference for better focus
-													filter: idx === selected ? "brightness(1)" : "brightness(0.8)",
-													// Subtle y-axis movement for desktop 3D effect
+													filter: idx === selected ? "brightness(1)" : "brightness(0.85)",
 													y: isMobileView ? 0 : (idx === selected ? -10 : 0)
 												}}
 												transition={{ 
@@ -524,17 +514,26 @@ export default function Home() {
 													ease: [0.4, 0, 0.2, 1] 
 												}}
 											>
-												<Card className="overflow-hidden bg-card/80 backdrop-blur-sm">
-													<div className="relative w-full h-48">
+												<Card className={cn(
+													'overflow-hidden bg-card/80 backdrop-blur-sm flex flex-col h-full',
+													isMobileView ? 'rounded-xl shadow-lg' : ''
+												)}>
+													<div className={cn(
+														'relative w-full',
+														isMobileView ? 'h-40' : 'h-48'
+													)}>
 														<Image
 															src={project.image || "/placeholder.svg"}
 															alt={project.title}
 															fill
-															sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+															sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
 															className="object-cover"
 														/>
 													</div>
-													<CardContent className="p-4 flex flex-col flex-grow">
+													<CardContent className={cn(
+														'p-4 flex flex-col flex-grow',
+														isMobileView ? 'py-2 px-2' : ''
+													)}>
 														<h4 className="font-semibold text-lg mb-1">{project.title}</h4>
 														<p className="text-sm text-muted-foreground line-clamp-3 mb-3 flex-grow">{project.description}</p>
 														<div className="flex flex-wrap gap-1 mb-3">
@@ -567,6 +566,28 @@ export default function Home() {
 										</CarouselItem>
 									))}
 								</CarouselContent>
+								{/* Mobile arrows: grouped and centered below the cards, outside the card, only on mobile */}
+								{isMobileView && (
+									<div className="flex justify-center gap-4 mt-3 mb-2">
+										<CarouselPrevious 
+											className="pointer-events-auto w-12 h-12 text-lg rounded-full bg-background/90 border border-primary/30 shadow-md" 
+										/>
+										<CarouselNext 
+											className="pointer-events-auto w-12 h-12 text-lg rounded-full bg-background/90 border border-primary/30 shadow-md" 
+										/>
+									</div>
+								)}
+								{/* Desktop arrows: absolute sides, only on desktop */}
+								{!isMobileView && (
+									<>
+										<CarouselPrevious 
+											className="pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 z-20 text-foreground bg-background hover:bg-primary/10" 
+										/>
+										<CarouselNext 
+											className="pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 z-20 text-foreground bg-background hover:bg-primary/10" 
+										/>
+									</>
+								)}
 							</Carousel>
 						</div>
 						{/* Dot Indicators */}

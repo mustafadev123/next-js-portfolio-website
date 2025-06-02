@@ -245,7 +245,11 @@ export function Chatbot() {
     ) {
       router.push("/projects")
       addBotMessage("Taking you to the projects page! 🚀")
-    } else if (lowerSuggestion.includes("about") || lowerSuggestion.includes("muhammad")) {
+    } else if (
+      (lowerSuggestion.includes("about") || lowerSuggestion.includes("muhammad")) &&
+      !projects.some(project => lowerSuggestion.includes(project.title.toLowerCase().split(" - ")[0]))
+    ) {
+      // Only navigate to about if it's not a project name
       router.push("/about")
       addBotMessage("Navigating to the about page! 👨‍💻")
     } else if (lowerSuggestion.includes("contact")) {
