@@ -168,7 +168,7 @@ export default function Projects() {
 						viewport={{ once: true }}
 						className="mb-16"
 					>
-						<h2 className="text-3xl font-bold mb-8 text-center">Featured Projects</h2>
+						<h2 className="text-3xl font-bold mb-8 mt-8 text-center">Featured Projects</h2>
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 							{filteredProjects
 								.filter((project) => project.featured)
