@@ -489,7 +489,7 @@ export default function Home() {
 											key={project.title} 
 											className={cn(
 												'px-2',
-												isMobileView ? 'basis-full max-w-full min-w-0' : 'basis-full md:basis-1/2 lg:basis-[45%] xl:basis-[40%] 2xl:basis-[35%]'
+												isMobileView ? 'basis-[95vw] max-w-[95vw] min-w-0' : 'basis-full md:basis-1/2 lg:basis-[45%] xl:basis-[40%] 2xl:basis-[35%]'
 											)}
 										>
 											<motion.div
@@ -532,7 +532,7 @@ export default function Home() {
 													</div>
 													<CardContent className={cn(
 														'p-4 flex flex-col flex-grow',
-														isMobileView ? 'py-2 px-2' : ''
+														isMobileView ? 'py-2 px-4' : ''
 													)}>
 														<h4 className="font-semibold text-lg mb-1">{project.title}</h4>
 														<p className="text-sm text-muted-foreground line-clamp-3 mb-3 flex-grow">{project.description}</p>
