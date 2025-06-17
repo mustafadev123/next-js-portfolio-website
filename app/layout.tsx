@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
 import { Loader } from "@/components/loader"
 import { Chatbot } from "@/components/chatbot"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -105,6 +106,7 @@ export default function RootLayout({
           <Navigation />
           <main className="min-h-screen">{children}</main>
           <Chatbot />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

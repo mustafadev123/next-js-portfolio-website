@@ -629,7 +629,7 @@ export default function Home() {
 									<ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
 								</Link>
 							</Button>
-							<Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600">
+							<Button asChild size="lg" variant="secondary" className="group">
 								<Link href="/projects">View My Work</Link>
 							</Button>
 						</div>
