@@ -6,6 +6,8 @@ import { motion } from "framer-motion"
 import { Mail, Phone, MapPin, Github, Linkedin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon"
 
 export default function Contact() {
   return (
@@ -124,23 +126,65 @@ export default function Contact() {
                   <CardDescription>Follow me on social media for updates and insights.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex space-x-4">
-                    <Button variant="outline" size="icon" asChild>
-                      <a href="https://github.com/Negatrin" target="_blank" rel="noopener noreferrer">
-                        <Github className="h-5 w-5" />
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="icon" asChild>
-                      <a href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/" target="_blank" rel="noopener noreferrer">
-                        <Linkedin className="h-5 w-5" />
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="icon" asChild>
-                      <a href="mailto:mustufashadab123@gmail.com">
-                        <Mail className="h-5 w-5" />
-                      </a>
-                    </Button>
-                  </div>
+                  <TooltipProvider>
+                    <div className="flex space-x-4">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="outline" size="icon" asChild>
+                            <a href="https://github.com/Negatrin" target="_blank" rel="noopener noreferrer">
+                              <Github className="h-5 w-5" />
+                            </a>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>GitHub</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="outline" size="icon" asChild>
+                            <a href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/" target="_blank" rel="noopener noreferrer">
+                              <Linkedin className="h-5 w-5" />
+                            </a>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>LinkedIn</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="outline" size="icon" asChild>
+                            <a href="mailto:mustufashadab123@gmail.com">
+                              <Mail className="h-5 w-5" />
+                            </a>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Email</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="outline" size="icon" asChild className="text-green-500 hover:text-green-600 hover:border-green-500">
+                            <a 
+                              href="https://wa.me/923093300668?text=Hi%20Muhammad%2C%20I%20visited%20your%20portfolio%20website%20and%20I'm%20interested%20in%20discussing%20a%20potential%20project%20or%20opportunity." 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                            >
+                              <WhatsAppIcon className="h-5 w-5" />
+                            </a>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>WhatsApp</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                  </TooltipProvider>
                 </CardContent>
               </Card>
             </div>
