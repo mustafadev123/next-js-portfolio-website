@@ -51,7 +51,7 @@ export function Chatbot() {
         )
       }, 500)
     }
-  }, [isOpen])
+  }, [isOpen, messages.length])
 
   const addBotMessage = (text: string, suggestions?: string[]) => {
     const newMessage: Message = {
@@ -219,16 +219,6 @@ export function Chatbot() {
       setIsLoading(false);
     }
   }
-
-  const projectTitles = [
-    "MindSync - Mental Health Platform",
-    "Crop Visualization Platform",
-    "Nike Clone E-commerce",
-    "Serene Airlines Website",
-    "Karachi City Guide",
-    "Urdu News Classification",
-    "Multimodal TB Detection"
-  ];
 
   const handleSuggestionClick = (suggestion: string) => {
     addUserMessage(suggestion)

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 export function Loader() {
@@ -8,7 +8,10 @@ export function Loader() {
   const [progress, setProgress] = useState(0)
   const [loadingText, setLoadingText] = useState("Initializing...")
 
-  const loadingSteps = ["Initializing...", "Loading components...", "Preparing experience...", "Almost ready..."]
+  const loadingSteps = useMemo(
+    () => ["Initializing...", "Loading components...", "Preparing experience...", "Almost ready..."],
+    []
+  )
 
   useEffect(() => {
     let stepIndex = 0
@@ -34,7 +37,7 @@ export function Loader() {
     }, 150)
 
     return () => clearInterval(progressTimer)
-  }, [])
+  }, [loadingSteps])
 
   return (
     <AnimatePresence>

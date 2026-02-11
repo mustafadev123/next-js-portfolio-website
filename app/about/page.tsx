@@ -94,7 +94,7 @@ export default function About() {
 						<h2 className="text-3xl font-bold mb-6">My Story</h2>
 						<div className="space-y-4 text-muted-foreground">
 							<p>
-								I'm a Software Engineer with hands-on experience building scalable
+								I&apos;m a Software Engineer with hands-on experience building scalable
 								backend systems, secure APIs, and AI-integrated solutions.
 								Currently pursuing my BSc in Computer Science at Lahore University
 								of Management Sciences (LUMS).
@@ -106,10 +106,10 @@ export default function About() {
 								across real-world platforms.
 							</p>
 							<p>
-								I'm particularly passionate about machine learning and AI, having
+								I&apos;m particularly passionate about machine learning and AI, having
 								developed diagnostic tools and classification systems that achieve
 								state-of-the-art performance. My goal is to create technology that
-								makes a meaningful difference in people's lives.
+								makes a meaningful difference in people&apos;s lives.
 							</p>
 						</div>
 

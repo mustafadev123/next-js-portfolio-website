@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, Download, Github, Linkedin, Mail, Code, Brain, Rocket, Star, ExternalLink } from 'lucide-react'
+import { ArrowRight, Download, Github, Linkedin, Mail, Rocket, ExternalLink } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -12,23 +12,7 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, Car
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
-const technologies = [
-	{ name: "React", logo: "/react.png" },
-	{ name: "Next.js", logo: "/nextjs.png" },
-	{ name: "Laravel", logo: "/laravel.png" },
-	{ name: "Spring Boot", logo: "/springboot.png" },
-	{ name: "Python", logo: "/python.png" },
-	{ name: "Java", logo: "/java.png" },
-	{ name: "Docker", logo: "/docker.png" },
-	{ name: "AWS", logo: "/aws.png" },
-	{ name: "MongoDB", logo: "/mongodb.png" },
-	{ name: "MySQL", logo: "/my_sql.png" },
-]
-
-const achievements = [
-	{ icon: Code, label: "3+ Years Experience", description: "Building scalable systems" },
-	{ icon: Rocket, label: "7+ Projects", description: "Across multiple domains" },
-]
+// (Technologies and achievements data removed because unused)
 
 const projects = [
 	{
@@ -422,7 +406,7 @@ export default function Home() {
 							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
 								<CardContent className="p-6">
 									<h4 className="text-lg font-bold mb-1">SWE Intern</h4>
-									<p className="text-muted-foreground mb-1">GERRY'S INFORMATION TECHNOLOGY</p>
+									<p className="text-muted-foreground mb-1">GERRY&apos;S INFORMATION TECHNOLOGY</p>
 									<p className="text-xs mb-2">Jul 2023 – Sep 2023</p>
 									<ul className="list-disc list-inside text-sm text-muted-foreground">
 										<li>Optimized aviation & FedEx web apps (30% faster load, 40% more mobile traffic)</li>
@@ -619,7 +603,7 @@ export default function Home() {
 						viewport={{ once: true }}
 						className="text-white"
 					>
-						<h3 className="text-3xl font-bold mb-4">Let's Build Something Amazing Together</h3>
+						<h3 className="text-3xl font-bold mb-4">Let&apos;s Build Something Amazing Together</h3>
 						<p className="text-xl mb-8 opacity-90">Ready to bring your ideas to life with cutting-edge technology?</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<Button asChild size="lg" variant="secondary" className="group">

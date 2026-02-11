@@ -22,7 +22,7 @@ export default function Contact() {
         >
           <h1 className="text-4xl sm:text-5xl font-bold mb-6">Get In Touch</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you!
+            Have a project in mind or want to collaborate? I&apos;d love to hear from you!
           </p>
         </motion.div>
 
@@ -49,7 +49,7 @@ export default function Contact() {
                 {/* Friendly message and large envelope icon in the middle */}
                 <div className="flex flex-col items-center justify-center flex-1">
                   <Mail className="h-16 w-16 text-primary/60 mb-4 animate-pulse" />
-                  <span className="text-muted-foreground text-lg text-center">Let's build something amazing together!</span>
+                  <span className="text-muted-foreground text-lg text-center">Let&apos;s build something amazing together!</span>
                 </div>
                 <CardContent className="flex flex-col items-center justify-end pb-8 flex-1 w-full">
                   <Button

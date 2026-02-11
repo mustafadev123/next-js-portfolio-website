@@ -96,7 +96,7 @@ export async function POST(req: Request) {
     let conversationContext = ""
     if (conversationHistory && conversationHistory.length > 0) {
       conversationContext = conversationHistory
-        .map((msg: any) => `${msg.isBot ? "Assistant" : "User"}: ${msg.text}`)
+        .map((msg: { isBot: boolean; text: string }) => `${msg.isBot ? "Assistant" : "User"}: ${msg.text}`)
         .join("\n")
     }
 
@@ -120,11 +120,9 @@ export async function POST(req: Request) {
     
     // Detect which project is being requested
     const isSpecificProjectRequest = cropVisualizationRegex.test(message) || mindSyncRegex.test(message) || 
-                                    nikeCloneRegex.test(message) || sereneRegex.test(message) || 
-                                    karachiRegex.test(message) || urduNewsRegex.test(message) || 
-                                    tbDetectionRegex.test(message) || multimodalRegex.test(message);
-                                    
-    const isProjectRequest = isSpecificProjectRequest || isGeneralProjectsRequest;
+                    nikeCloneRegex.test(message) || sereneRegex.test(message) || 
+                    karachiRegex.test(message) || urduNewsRegex.test(message) || 
+                    tbDetectionRegex.test(message) || multimodalRegex.test(message);
     
     // Determine the specific project if it's a project request
     let projectName = "";

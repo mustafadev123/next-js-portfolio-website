@@ -9,7 +9,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import "./highlight.css"
 import { projects } from "@/lib/projects-data"
 
@@ -20,7 +19,6 @@ export default function Projects() {
 	const [searchTerm, setSearchTerm] = useState("")
 	const { scrollYProgress } = useScroll()
 	const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
-	const router = useRouter()
 
 	// Handle URL query parameters for direct project navigation
 	useEffect(() => {
