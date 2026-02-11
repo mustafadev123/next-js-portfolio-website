@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation"
 import "./highlight.css"
 import { projects } from "@/lib/projects-data"
 
-const categories = ["All", "AI/ML", "Healthcare", "E-commerce", "Travel", "Agriculture", "Tourism"]
+const categories = ["All", "Analytics", "AI/ML", "Research", "Education", "Healthcare", "E-commerce", "Travel", "Agriculture", "Tourism"]
 
 export default function Projects() {
 	const [selectedCategory, setSelectedCategory] = useState("All")

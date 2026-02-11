@@ -32,12 +32,12 @@ const achievements = [
 
 const projects = [
 	{
-		title: "Crop Visualization Platform",
+		title: "Auto-Analytics Platform (ContinuumAI)",
 		description:
-			"Interactive map with satellite imagery and NDVI overlays for crop-health monitoring using geospatial analysis.",
-		image: "/crop_visualization.png",
-		technologies: ["React", "Satellite Imagery", "NDVI"],
-		liveUrl: "https://satellite-portal-crop.vercel.app/",
+			"Agentic analytics platform with validated text-to-SQL aggregations, charting, and a RAG-backed chatbot for business data.",
+		image: "/continuumai.png",
+		technologies: ["Next.js", "Python", "Redis"],
+		liveUrl: "https://p13-continuum-ai-three.vercel.app/",
 		githubUrl: "",
 		featured: true,
 	},
@@ -61,7 +61,6 @@ const projects = [
 		githubUrl: "",
 		featured: true,
 	},
-	// Add more projects as needed
 ]
 
 export default function Home() {

@@ -1,6 +1,54 @@
 // Centralized export of the projects array for use in both the projects page and chatbot
 export const projects = [
   {
+    title: "Auto-Analytics Platform (ContinuumAI)",
+    description:
+      "Agentic analytics platform that profiles business data sources, generates validated text-to-SQL aggregations, and renders decision-ready charts with a RAG-backed chatbot for follow-up questions.",
+    image: "/continuumai.png",
+    technologies: [
+      "Next.js",
+      "Python",
+      "Redis",
+      "PostgreSQL",
+      "Snowflake",
+      "Kafka",
+      "Text-to-SQL",
+      "RAG Chatbot",
+    ],
+    category: "Analytics",
+    liveUrl: "https://p13-continuum-ai-three.vercel.app/",
+    githubUrl: null,
+    featured: true,
+  },
+  {
+    title: "Simulating Physicians: Persona Effects in Clinical LLMs",
+    description:
+      "Evaluated persona-conditioned diagnostic reasoning across six LLMs and nine geographic prompts using rubric-based scoring, revealing significant persona-driven performance shifts in clinical decision support.",
+    image: "/github_logo.png",
+    technologies: ["Python", "LLMs", "Prompt Engineering", "Clinical NLP", "Statistical Analysis"],
+    category: "Research",
+    liveUrl: null,
+    githubUrl: "https://github.com/hashirsalman/simulating_physicians",
+    featured: false,
+  },
+  {
+    title: "IntelliLearn - Personalized EdTech Platform",
+    description:
+      "Personalized learning portal with adaptive LLM-generated quizzes, course catalog, and chat guidance, combining modern GenAI pipelines with Next.js delivery.",
+    image: "/IntelliLearn.png",
+    technologies: [
+      "Next.js",
+      "LLM Chatbot",
+      "Quiz Generation",
+      "Vector Search",
+      "Personalization",
+    ],
+    category: "Education",
+    liveUrl: "https://intellilearn.netlify.app/",
+    githubUrl: null,
+    featured: true,
+  },
+  {
     title: "MindSync - Mental Health Platform",
     description:
       "A comprehensive mental health platform connecting users with therapists, featuring secure authentication and role-based access for both patients and practitioners.",
@@ -15,7 +63,7 @@ export const projects = [
     category: "Healthcare",
     liveUrl: "https://sedeploy-2.vercel.app/",
     githubUrl: null,
-    featured: true,
+    featured: false,
     // year: "2024",
   },
   {
@@ -27,7 +75,7 @@ export const projects = [
     category: "Agriculture",
     liveUrl: "https://satellite-portal-crop.vercel.app/",
     githubUrl: null,
-    featured: true,
+    featured: false,
     // year: "2024",
   },
   {
@@ -39,7 +87,7 @@ export const projects = [
     category: "E-commerce",
     liveUrl: "https://project-2-delta-mauve.vercel.app/",
     githubUrl: null,
-    featured: true,
+    featured: false,
     // year: "2024",
   },
   {
@@ -50,7 +98,7 @@ export const projects = [
     category: "Travel",
     liveUrl: "https://sereneair.com/",
     githubUrl: null,
-    featured: false,
+    featured: true,
     // year: "2024",
   },
   {
@@ -74,7 +122,7 @@ export const projects = [
     category: "AI/ML",
     liveUrl: null,
     githubUrl: "https://github.com/ha405/Urdu-News-Classification-with-ML",
-    featured: true,
+    featured: false,
     // year: "2023",
   },
   {
@@ -86,7 +134,7 @@ export const projects = [
     category: "AI/ML",
     liveUrl: null,
     githubUrl: "https://github.com/Negatrin/Mutlimodal_tb_detection/",
-    featured: true,
+    featured: false,
     // year: "2023",
   },
 ];
