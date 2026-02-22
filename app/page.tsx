@@ -21,7 +21,7 @@ const projects = [
 			"Agentic analytics platform with validated text-to-SQL aggregations, charting, and a RAG-backed chatbot for business data.",
 		image: "/continuumai.png",
 		technologies: ["Next.js", "Python", "Redis"],
-		liveUrl: "https://p13-continuum-ai-three.vercel.app/",
+		liveUrl: "http://129.151.131.126",
 		githubUrl: "",
 		featured: true,
 	},

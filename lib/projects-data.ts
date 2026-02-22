@@ -16,7 +16,7 @@ export const projects = [
       "RAG Chatbot",
     ],
     category: "Analytics",
-    liveUrl: "https://p13-continuum-ai-three.vercel.app/",
+    liveUrl: "http://129.151.131.126",
     githubUrl: null,
     featured: true,
   },
