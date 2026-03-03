@@ -16,7 +16,7 @@ export const projects = [
       "RAG Chatbot",
     ],
     category: "Analytics",
-    liveUrl: "https://p13-continuum-ai-three.vercel.app/",
+    liveUrl: "https://www.youtube.com/watch?v=T_hFb3U4KF0",
     githubUrl: null,
     featured: true,
   },
