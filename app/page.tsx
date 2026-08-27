@@ -224,7 +224,7 @@ export default function Home() {
 						>
 							{[
 								{ icon: Mail, href: "mailto:mustufashadab123@gmail.com", label: "Email" },
-								{ icon: Github, href: "https://github.com/Negatrin", label: "GitHub" },
+								{ icon: Github, href: "https://github.com/mustafadev123", label: "GitHub" },
 								{ icon: Linkedin, href: "https://www.linkedin.com/in/muhammad-mustufa-02a108230/", label: "LinkedIn" },
 							].map((social, index) => (
 								<motion.div

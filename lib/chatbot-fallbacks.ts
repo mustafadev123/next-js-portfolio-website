@@ -39,7 +39,7 @@ const aboutResponses = [
 ];
 
 const contactResponses = [
-  "You can reach Muhammad via email at mustufashadab123@gmail.com or by phone: +92-309-3300668. His GitHub is https://github.com/Negatrin and LinkedIn: https://www.linkedin.com/in/muhammad-mustufa-02a108230/. How would you prefer to contact him?",
+  "You can reach Muhammad via email at mustufashadab123@gmail.com or by phone: +92-309-3300668. His GitHub is https://github.com/mustafadev123 and LinkedIn: https://www.linkedin.com/in/muhammad-mustufa-02a108230/. How would you prefer to contact him?",
   "The best way to contact Muhammad is through his email (mustufashadab123@gmail.com) or LinkedIn profile. Would you like me to help you draft a message to him?"
 ];
 

@@ -19,7 +19,7 @@ ABOUT MUHAMMAD MUSTAFA:
 - Location: Karachi, Pakistan
 - Email: mustufashadab123@gmail.com
 - Phone: +92-309-3300668
-- GitHub: https://github.com/Negatrin
+- GitHub: https://github.com/mustafadev123
 - LinkedIn: https://www.linkedin.com/in/muhammad-mustufa-02a108230/
 
 WORK EXPERIENCE:

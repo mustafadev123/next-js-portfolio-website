@@ -83,7 +83,7 @@ export function Navigation() {
             <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-border">
               {/* Social Links */}
               <Button variant="ghost" size="icon" asChild className="w-8 h-8">
-                <a href="https://github.com/Negatrin" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4" />
                 </a>
               </Button>
@@ -174,7 +174,7 @@ export function Navigation() {
                 className="flex justify-center space-x-4 pt-4 border-t border-border"
               >
                 <Button variant="outline" size="icon" asChild>
-                  <a href="https://github.com/Negatrin" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer">
                     <Github className="h-4 w-4" />
                   </a>
                 </Button>
