@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     "LUMS",
     "Pakistan Developer",
   ],
-  authors: [{ name: "Muhammad Mustafa", url: "https://github.com/Negatrin" }],
+  authors: [{ name: "Muhammad Mustafa", url: "https://github.com/mustafadev123" }],
   creator: "Muhammad Mustafa",
   publisher: "Muhammad Mustafa",
   robots: {
