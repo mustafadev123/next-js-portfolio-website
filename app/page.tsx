@@ -21,7 +21,7 @@ const projects = [
 			"Agentic analytics platform with validated text-to-SQL aggregations, charting, and a RAG-backed chatbot for business data.",
 		image: "/continuumai.png",
 		technologies: ["Next.js", "Python", "Redis"],
-		liveUrl: "https://www.youtube.com/watch?v=T_hFb3U4KF0",
+		liveUrl: "https://www.youtube.com/watch?v=rcmeS7pLnzQ&t=27s",
 		githubUrl: "",
 		featured: true,
 	},

@@ -16,7 +16,7 @@ export const projects = [
       "RAG Chatbot",
     ],
     category: "Analytics",
-    liveUrl: "https://www.youtube.com/watch?v=T_hFb3U4KF0",
+    liveUrl: "https://www.youtube.com/watch?v=rcmeS7pLnzQ&t=27s",
     githubUrl: null,
     featured: true,
   },
