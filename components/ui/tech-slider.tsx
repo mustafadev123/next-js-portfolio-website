@@ -22,24 +22,20 @@ const technologies: Technology[] = [
   { name: "MySQL", logo: "/my_sql.png" },
 ]
 
-// Triple the list so it loops seamlessly
-const extendedTechnologies = [
-  ...technologies,
-  ...technologies,
-  ...technologies,
-]
+const extendedTechnologies = [...technologies, ...technologies]
 
 export function TechSlider({ className = "" }: { className?: string }) {
   return (
     <div
-      className={
-        "w-full overflow-hidden bg-transparent h-16 md:h-20 relative " +
-        className
-      }
+      className={"relative w-full overflow-hidden py-2 " + className}
+      aria-label="Technologies used"
     >
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-background to-transparent sm:w-16" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-background to-transparent sm:w-16" />
+
       <motion.div
-        className="flex"
-        animate={{ x: [0, -200 * technologies.length] }}
+        className="flex w-max"
+        animate={{ x: ["0%", "-50%"] }}
         transition={{
           x: {
             repeat: Infinity,
@@ -51,29 +47,16 @@ export function TechSlider({ className = "" }: { className?: string }) {
       >
         {extendedTechnologies.map((tech, index) => (
           <div
-            key={index}
-            className="w-[200px] md:w-[240px] flex-shrink-0 flex items-center justify-center h-full"
+            key={`${tech.name}-${index}`}
+            className="flex h-20 w-36 shrink-0 items-center justify-center px-3 sm:w-44"
           >
-            {/* 
-              - Light mode: bg-white (or transparent over white body) + no blend, so black logos appear.
-              - Dark mode: bg-[#0c101b] + mix-blend-lighten, so only white parts of the PNG show.
-            */}            <div
-              className={`
-                relative w-28 md:w-36 h-14 md:h-18
-                bg-white           /* Light mode: white background */
-                dark:bg-[#0c101b]  /* Dark mode: #0c101b background */
-                flex items-center justify-center
-              `}
-            >
+            <div className="group flex h-16 w-full items-center justify-center rounded-2xl border border-slate-200/40 bg-slate-900/5 px-4 backdrop-blur-sm transition-all duration-300 hover:border-blue-400/35 hover:bg-slate-900/10 dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.07]">
               <Image
                 src={tech.logo}
                 alt={tech.name}
-                fill
-                style={{ objectFit: "contain" }}
-                className={`
-                  /* Light: no blend => show black on white */
-                  dark:mix-blend-lighten  /* Dark: only white parts appear */
-                `}
+                width={120}
+                height={56}
+                className="h-10 w-auto object-contain opacity-70 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
               />
             </div>
           </div>
