@@ -12,7 +12,7 @@ import { useState, useEffect } from "react"
 import "./highlight.css"
 import { projects } from "@/lib/projects-data"
 
-const categories = ["All", "Analytics", "AI/ML", "Research", "Education", "Healthcare", "E-commerce", "Travel", "Agriculture", "Tourism"]
+const categories = ["All", "Analytics", "AI/ML", "Research", "Education", "Healthcare", "E-commerce", "Travel", "Agriculture", "Tourism", "Productivity"]
 
 export default function Projects() {
 	const [selectedCategory, setSelectedCategory] = useState("All")
