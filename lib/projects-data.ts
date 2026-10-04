@@ -21,9 +21,20 @@ export const projects = [
     featured: true,
   },
   {
+    title: "Screenshot Zero",
+    description:
+      "A mobile-first productivity app that turns screenshot clutter into actionable items by extracting intent, suggesting next steps, and helping users clear their camera roll to Inbox Zero.",
+    image: "/github_logo.png",
+    technologies: ["Flutter", "Dart", "Riverpod", "ML Kit", "FastAPI", "OpenAI", "Android"],
+    category: "Productivity",
+    liveUrl: "https://www.youtube.com/watch?v=rZnx14GW3YI",
+    githubUrl: "https://github.com/mustafadev123/screenshot-zero",
+    featured: true,
+  },
+  {
     title: "Simulating Physicians: Persona Effects in Clinical LLMs",
     description:
-      "Evaluated persona-conditioned diagnostic reasoning across six LLMs and nine geographic prompts using rubric-based scoring, revealing significant persona-driven performance shifts in clinical decision support.",
+      "Evaluated persona-conditioned diagnostic reasoning across six LLMs and nine geographic prompts using rubric-based scoring, revealing significant persona-driven performance shifts in clinical reasoning.",
     image: "/github_logo.png",
     technologies: ["Python", "LLMs", "Prompt Engineering", "Clinical NLP", "Statistical Analysis"],
     category: "Research",
