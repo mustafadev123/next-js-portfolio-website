@@ -74,12 +74,15 @@ export default function Projects() {
 		}
 	}, []);
 
+	const normalizedSearch = searchTerm.trim().toLowerCase()
+
 	const filteredProjects = projects.filter((project) => {
 		const matchesCategory = selectedCategory === "All" || project.category === selectedCategory
 		const matchesSearch =
-			project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			project.technologies.some((tech) => tech.toLowerCase().includes(searchTerm.toLowerCase()))
+			normalizedSearch.length === 0 ||
+			project.title.toLowerCase().includes(normalizedSearch) ||
+			project.description.toLowerCase().includes(normalizedSearch) ||
+			project.technologies.some((tech) => tech.toLowerCase().includes(normalizedSearch))
 		return matchesCategory && matchesSearch
 	})
 
@@ -125,26 +128,30 @@ export default function Projects() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6, delay: 0.4 }}
-						className="flex flex-col md:flex-row gap-4 mb-12"
+						className="mb-12 flex flex-col gap-4 md:flex-row md:items-start"
 					>
-						<div className="relative flex-1">
-							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+						<div className="relative w-full md:w-80 md:shrink-0">
+							<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
 							<Input
 								placeholder="Search projects, technologies..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
-								className="pl-10"
+								className="h-11 w-full rounded-xl border-slate-300/70 bg-white/80 pl-10 text-slate-900 shadow-sm backdrop-blur-sm placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-500/40 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-400"
 							/>
 						</div>
 
-						<div className="flex flex-wrap gap-2">
+						<div className="flex flex-1 flex-wrap gap-2">
 							{categories.map((category) => (
 								<Button
 									key={category}
-									variant={selectedCategory === category ? "default" : "outline"}
+									variant="outline"
 									size="sm"
 									onClick={() => setSelectedCategory(category)}
-									className="transition-all duration-200"
+									className={`min-h-11 rounded-xl border px-4 text-sm font-medium transition-all duration-200 ${
+										selectedCategory === category
+											? "border-blue-400/50 bg-blue-500/15 text-blue-100 shadow-[0_0_16px_rgba(59,130,246,0.2)] dark:bg-blue-500/20"
+											: "border-slate-300/70 bg-white/75 text-slate-700 hover:border-blue-300/60 hover:bg-blue-50/70 dark:border-white/10 dark:bg-slate-950/65 dark:text-slate-200 dark:hover:border-blue-400/40 dark:hover:bg-slate-800/75"
+									}`}
 								>
 									<Filter className="h-3 w-3 mr-1" />
 									{category}
