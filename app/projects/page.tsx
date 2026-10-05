@@ -74,12 +74,15 @@ export default function Projects() {
 		}
 	}, []);
 
+	const normalizedSearchTerm = searchTerm.trim().toLowerCase()
+
 	const filteredProjects = projects.filter((project) => {
 		const matchesCategory = selectedCategory === "All" || project.category === selectedCategory
 		const matchesSearch =
-			project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			project.technologies.some((tech) => tech.toLowerCase().includes(searchTerm.toLowerCase()))
+			normalizedSearchTerm.length === 0 ||
+			project.title.toLowerCase().includes(normalizedSearchTerm) ||
+			project.description.toLowerCase().includes(normalizedSearchTerm) ||
+			project.technologies.some((tech) => tech.toLowerCase().includes(normalizedSearchTerm))
 		return matchesCategory && matchesSearch
 	})
 
@@ -125,19 +128,22 @@ export default function Projects() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6, delay: 0.4 }}
-						className="flex flex-col md:flex-row gap-4 mb-12"
+						className="mb-12 flex w-full min-w-0 flex-col gap-4 md:flex-row md:items-center"
 					>
-						<div className="relative flex-1">
-							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+						<div className="relative w-full min-w-0 md:flex-1">
+							<Search
+								aria-hidden="true"
+								className="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+							/>
 							<Input
 								placeholder="Search projects, technologies..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
-								className="pl-10"
+								className="h-12 w-full min-w-0 pl-10"
 							/>
 						</div>
 
-						<div className="flex flex-wrap gap-2">
+						<div className="flex w-full min-w-0 flex-wrap gap-2 md:w-auto md:flex-shrink-0">
 							{categories.map((category) => (
 								<Button
 									key={category}
