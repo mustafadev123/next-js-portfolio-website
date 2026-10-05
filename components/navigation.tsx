@@ -53,7 +53,7 @@ export function Navigation() {
                 <span className="text-white font-bold text-sm">MM</span>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Muhammad Mustafa
+                Muhammad Mustufa
               </span>
             </motion.div>
           </Link>
@@ -83,7 +83,7 @@ export function Navigation() {
             <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-border">
               {/* Social Links */}
               <Button variant="ghost" size="icon" asChild className="w-8 h-8">
-                <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                   <Github className="h-4 w-4" />
                 </a>
               </Button>
@@ -92,6 +92,7 @@ export function Navigation() {
                   href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="LinkedIn"
                 >
                   <Linkedin className="h-4 w-4" />
                 </a>
@@ -174,7 +175,7 @@ export function Navigation() {
                 className="flex justify-center space-x-4 pt-4 border-t border-border"
               >
                 <Button variant="outline" size="icon" asChild>
-                  <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                     <Github className="h-4 w-4" />
                   </a>
                 </Button>
@@ -183,12 +184,13 @@ export function Navigation() {
                     href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="LinkedIn"
                   >
                     <Linkedin className="h-4 w-4" />
                   </a>
                 </Button>
                 <Button variant="outline" size="icon" asChild>
-                  <a href="mailto:mustufashadab123@gmail.com">
+                  <a href="mailto:mustufashadab123@gmail.com" aria-label="Email">
                     <Mail className="h-4 w-4" />
                   </a>
                 </Button>
