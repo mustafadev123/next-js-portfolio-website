@@ -253,9 +253,3 @@ html {
 ::selection {
   @apply bg-primary/20 text-primary;
 }
-/* Replace .tech-slider-container with whatever your slider’s wrapper class is */
-.tech-slider-container::before,
-.tech-slider-container::after {
-  display: none !important;
-}
-
