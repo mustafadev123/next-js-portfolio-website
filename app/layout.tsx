@@ -4,7 +4,6 @@ import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
-import { Loader } from "@/components/loader"
 import { Chatbot } from "@/components/chatbot"
 import { Analytics } from "@vercel/analytics/next"
 
@@ -22,27 +21,24 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Muhammad Mustafa - Software Engineer & ML Enthusiast",
-    template: "%s | Muhammad Mustafa",
+    default: "Muhammad Mustufa - Software Engineer",
+    template: "%s | Muhammad Mustufa",
   },
   description:
-    "Portfolio of Muhammad Mustafa, a Software Engineer with expertise in backend systems, AI integration, and full-stack development. Experienced in Laravel, Spring Boot, React, and Machine Learning.",
+    "Portfolio of Muhammad Mustufa, a software engineer building practical web and mobile applications, backend systems, and applied machine learning solutions.",
   keywords: [
-    "Muhammad Mustafa",
+    "Muhammad Mustufa",
     "Software Engineer",
     "Machine Learning",
     "Backend Development",
-    "React",
-    "Laravel",
-    "Spring Boot",
-    "AI Integration",
-    "Full Stack Developer",
-    "LUMS",
-    "Pakistan Developer",
+    "Applied ML",
+    "Web Development",
+    "Mobile Development",
+    "Georgia State University",
   ],
-  authors: [{ name: "Muhammad Mustafa", url: "https://github.com/mustafadev123" }],
-  creator: "Muhammad Mustafa",
-  publisher: "Muhammad Mustafa",
+  authors: [{ name: "Muhammad Mustufa", url: "https://github.com/mustafadev123" }],
+  creator: "Muhammad Mustufa",
+  publisher: "Muhammad Mustufa",
   robots: {
     index: true,
     follow: true,
@@ -57,33 +53,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://muhammad-mustafa.dev",
-    title: "Muhammad Mustafa - Software Engineer & ML Enthusiast",
-    description: "Portfolio showcasing projects in web development, machine learning, and AI integration.",
-    siteName: "Muhammad Mustafa Portfolio",
+    title: "Muhammad Mustufa - Software Engineer",
+    description: "Portfolio showcasing practical software engineering and applied machine learning projects.",
+    siteName: "Muhammad Mustufa Portfolio",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Muhammad Mustafa - Software Engineer & ML Enthusiast",
+        alt: "Muhammad Mustufa - Software Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Muhammad Mustafa - Software Engineer & ML Enthusiast",
-    description: "Portfolio showcasing projects in web development, machine learning, and AI integration.",
+    title: "Muhammad Mustufa - Software Engineer",
+    description: "Portfolio showcasing practical software engineering and applied machine learning projects.",
     images: ["/og-image.jpg"],
-    creator: "@muhammad_mustafa",
   },
-  verification: {
-    google: "your-google-verification-code",
-  },
-  alternates: {
-    canonical: "https://muhammad-mustafa.dev",
-  },
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
@@ -93,16 +81,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-      </head>
       <body suppressHydrationWarning className={`${inter.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Loader />
           <Navigation />
           <main className="min-h-screen">{children}</main>
           <Chatbot />
