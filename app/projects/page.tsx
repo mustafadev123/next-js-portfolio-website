@@ -128,19 +128,22 @@ export default function Projects() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6, delay: 0.4 }}
-						className="mb-12 flex flex-col gap-4 md:flex-row md:items-start"
+						className="mb-12 flex w-full min-w-0 flex-col gap-4 md:flex-row md:items-start"
 					>
-						<div className="relative w-full md:w-80 md:shrink-0">
-							<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
+						<div className="relative w-full min-w-0 md:flex-1">
+							<Search
+								aria-hidden="true"
+								className="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-slate-500 dark:text-slate-400"
+							/>
 							<Input
 								placeholder="Search projects, technologies..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
-								className="h-11 w-full rounded-xl border-slate-300/70 bg-white/80 pl-10 text-slate-900 shadow-sm backdrop-blur-sm placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-500/40 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-400"
+								className="h-12 w-full min-w-0 rounded-xl border-slate-300/70 bg-white/80 pl-10 text-slate-900 shadow-sm backdrop-blur-sm placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-500/40 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-400"
 							/>
 						</div>
 
-						<div className="flex flex-1 flex-wrap gap-2">
+						<div className="flex w-full min-w-0 flex-wrap gap-2 md:w-auto md:flex-shrink-0">
 							{categories.map((category) => (
 								<Button
 									key={category}
