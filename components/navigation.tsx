@@ -1,204 +1,234 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Sun, Moon, Github, Linkedin, Mail } from "lucide-react"
+import * as Dialog from "@radix-ui/react-dialog"
+import { ArrowUpRight, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { navItems, profile, socials } from "@/lib/content"
 
-const navItems = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Contact", href: "/contact" },
-]
+const isActive = (pathname: string, href: string) =>
+  href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`)
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const { theme, setTheme } = useTheme()
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const lastY = useRef(0)
 
+  // Solid background once scrolled; slide away while scrolling down, return on scroll up.
   useEffect(() => {
-    setMounted(true)
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 24)
+      setHidden(y > 160 && y > lastY.current)
+      lastY.current = y
     }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  if (!mounted) return null
+  useEffect(() => setOpen(false), [pathname])
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b shadow-lg" : "bg-transparent"
-      }`}
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-40 border-b transition-[transform,background-color,border-color] duration-500 ease-out-expo",
+        scrolled ? "border-rule bg-background/85 backdrop-blur-md" : "border-transparent bg-transparent",
+        hidden && !open && "-translate-y-full",
+      )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="relative group">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">MM</span>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Muhammad Mustufa
-              </span>
-            </motion.div>
-          </Link>
+      <div className="shell flex h-[var(--nav-h)] items-center justify-between gap-6">
+        <Brand />
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="relative px-4 py-2 text-sm font-medium transition-colors hover:text-primary group"
-              >
-                <span className={pathname === item.href ? "text-primary" : "text-muted-foreground"}>{item.name}</span>
-                {pathname === item.href && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
-                  />
-                )}
-                <motion.div
-                  className="absolute inset-0 bg-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                  whileHover={{ scale: 1.05 }}
-                />
-              </Link>
-            ))}
-
-            <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-border">
-              {/* Social Links */}
-              <Button variant="ghost" size="icon" asChild className="w-8 h-8">
-                <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                  <Github className="h-4 w-4" />
-                </a>
-              </Button>
-              <Button variant="ghost" size="icon" asChild className="w-8 h-8">
-                <a
-                  href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="h-4 w-4" />
-                </a>
-              </Button>
-
-              {/* Theme Toggle */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="w-8 h-8"
-              >
-                <motion.div
-                  initial={false}
-                  animate={{ rotate: theme === "dark" ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                </motion.div>
-              </Button>
-            </div>
-          </div>
-
-          {/* Mobile Navigation Button */}
-          <div className="md:hidden flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="w-8 h-8"
-            >
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
-
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)} className="w-8 h-8">
-              <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </motion.div>
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-t"
-          >
-            <div className="px-4 py-6 space-y-4">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
+        <nav aria-label="Primary" className="hidden md:block">
+          <ul className="flex items-center gap-1">
+            {navItems.map((item, i) => {
+              const active = isActive(pathname, item.href)
+              return (
+                <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`block px-4 py-3 text-base font-medium transition-colors rounded-lg ${
-                      pathname === item.href
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-primary hover:bg-primary/5"
-                    }`}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "group flex items-baseline gap-1.5 rounded px-3 py-2 text-sm transition-colors",
+                      active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+                    )}
                   >
-                    {item.name}
+                    <span className={cn("font-mono text-[0.625rem]", active ? "text-signal" : "text-faint")}>
+                      0{i + 1}
+                    </span>
+                    {/* Label rolls up to reveal a secondary hint on hover */}
+                    <span className="relative block h-[1.25em] overflow-hidden">
+                      <span className="block transition-transform duration-500 ease-out-expo group-hover:-translate-y-full group-focus-visible:-translate-y-full">
+                        {item.name}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="absolute left-0 top-full block text-signal transition-transform duration-500 ease-out-expo group-hover:-translate-y-full group-focus-visible:-translate-y-full"
+                      >
+                        {item.hint}
+                      </span>
+                    </span>
                   </Link>
-                </motion.div>
-              ))}
+                </li>
+              )
+            })}
+          </ul>
+        </nav>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="flex justify-center space-x-4 pt-4 border-t border-border"
-              >
-                <Button variant="outline" size="icon" asChild>
-                  <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                    <Github className="h-4 w-4" />
-                  </a>
-                </Button>
-                <Button variant="outline" size="icon" asChild>
+        <div className="flex items-center gap-2">
+          <a
+            href={profile.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group hidden items-center gap-1.5 rounded-full border border-border px-4 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.12em] transition-colors hover:border-signal hover:text-signal sm:inline-flex"
+          >
+            Résumé
+            <ArrowUpRight
+              aria-hidden="true"
+              className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            />
+          </a>
+          <ThemeToggle />
+          <MobileMenu open={open} onOpenChange={setOpen} pathname={pathname} />
+        </div>
+      </div>
+    </header>
+  )
+}
+
+function Brand() {
+  return (
+    <Link href="/" aria-label={`${profile.name}, home`} className="group flex items-center gap-2.5">
+      <span aria-hidden="true" className="relative grid h-7 w-7 place-items-center">
+        <span className="absolute inset-0 rounded-full border border-foreground/30 transition-transform duration-700 ease-out-expo group-hover:scale-110" />
+        <span className="h-2 w-2 rounded-full bg-signal transition-transform duration-500 ease-out-expo group-hover:scale-150" />
+      </span>
+      <span className="font-display text-[1.0625rem] font-semibold tracking-tight">{profile.name}</span>
+    </Link>
+  )
+}
+
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme()
+  return (
+    <button
+      type="button"
+      aria-label="Toggle color theme"
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+    >
+      {/* Both icons render; CSS picks one so server and client markup match */}
+      <Sun aria-hidden="true" className="hidden h-4 w-4 dark:block" />
+      <Moon aria-hidden="true" className="h-4 w-4 dark:hidden" />
+    </button>
+  )
+}
+
+function MobileMenu({
+  open,
+  onOpenChange,
+  pathname,
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  pathname: string
+}) {
+  return (
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      <Dialog.Trigger asChild>
+        <button
+          type="button"
+          className="flex h-9 items-center gap-2 rounded-full border border-border px-3.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] md:hidden"
+        >
+          Menu
+          <span aria-hidden="true" className="flex w-3.5 flex-col gap-[3px]">
+            <span className="h-px w-full bg-current" />
+            <span className="h-px w-2/3 bg-current" />
+          </span>
+        </button>
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Content
+          aria-describedby={undefined}
+          className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 md:hidden"
+        >
+          <Dialog.Title className="sr-only">Site menu</Dialog.Title>
+          <div className="shell flex h-[var(--nav-h)] shrink-0 items-center justify-between">
+            <Brand />
+            <Dialog.Close className="flex h-9 items-center gap-2 rounded-full border border-border px-3.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em]">
+              Close
+              <span aria-hidden="true" className="relative h-3 w-3">
+                <span className="absolute left-0 top-1/2 h-px w-full rotate-45 bg-current" />
+                <span className="absolute left-0 top-1/2 h-px w-full -rotate-45 bg-current" />
+              </span>
+            </Dialog.Close>
+          </div>
+
+          <nav aria-label="Primary" className="shell flex-1 pt-10">
+            <ul className="border-t border-rule">
+              {navItems.map((item, i) => {
+                const active = isActive(pathname, item.href)
+                return (
+                  <li key={item.href} className="border-b border-rule">
+                    <Link
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      onClick={() => onOpenChange(false)}
+                      className="flex items-baseline justify-between py-5"
+                    >
+                      <span className="reveal-line" style={{ ["--i" as string]: i }}>
+                        <span
+                          className={cn(
+                            "font-display text-[clamp(2.5rem,12vw,4rem)] font-semibold leading-none tracking-[-0.04em]",
+                            active && "text-signal",
+                          )}
+                        >
+                          {item.name}
+                        </span>
+                      </span>
+                      <span className="eyebrow">
+                        0{i + 1} / {item.hint}
+                      </span>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+
+          <div className="shell grid gap-6 pb-10 pt-12">
+            <a
+              href={profile.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between rounded-full bg-signal px-6 py-4 font-mono text-xs uppercase tracking-[0.14em] text-background"
+            >
+              Download résumé <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+            </a>
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
+              {socials.map((s) => (
+                <li key={s.id}>
                   <a
-                    href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/"
-                    target="_blank"
+                    href={s.href}
+                    target={s.id === "email" ? undefined : "_blank"}
                     rel="noopener noreferrer"
-                    aria-label="LinkedIn"
+                    className="eyebrow inline-flex items-center gap-1 text-foreground"
                   >
-                    <Linkedin className="h-4 w-4" />
+                    {s.label} <ArrowUpRight aria-hidden="true" className="h-3 w-3" />
                   </a>
-                </Button>
-                <Button variant="outline" size="icon" asChild>
-                  <a href="mailto:mustufashadab123@gmail.com" aria-label="Email">
-                    <Mail className="h-4 w-4" />
-                  </a>
-                </Button>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+                </li>
+              ))}
+            </ul>
+            <p className="eyebrow">{profile.location}</p>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }

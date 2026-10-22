@@ -1,221 +1,110 @@
-"use client"
-
-import type React from "react"
-
-import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Github, Linkedin } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import type { Metadata } from "next"
+import { ArrowUpRight } from "lucide-react"
+import { PageHeader } from "@/components/page-header"
+import { Reveal } from "@/components/reveal"
+import { CopyButton } from "@/components/copy-button"
+import { LocalTime } from "@/components/home/hero-client"
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon"
+import { getSocial, profile } from "@/lib/content"
 
-export default function Contact() {
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Get in touch with Muhammad Mustufa by email, phone, LinkedIn, GitHub, or WhatsApp.",
+}
+
+export default function ContactPage() {
+  const channels = [
+    { label: "Phone", value: profile.phone, href: `tel:${profile.phone.replace(/[^\d+]/g, "")}`, external: false },
+    { label: "LinkedIn", value: getSocial("linkedin").handle!, href: getSocial("linkedin").href, external: true },
+    { label: "GitHub", value: getSocial("github").handle!, href: getSocial("github").href, external: true },
+    { label: "WhatsApp", value: profile.phone, href: getSocial("whatsapp").href, external: true, icon: true },
+    { label: "Résumé", value: "Download PDF", href: profile.resume, external: true },
+  ]
+
   return (
-    <div className="min-h-screen pt-16 flex flex-col">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex-1 flex flex-col">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl sm:text-5xl font-bold mb-6">Get In Touch</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Have a project in mind or want to collaborate? I&apos;d love to hear from you!
-          </p>
-        </motion.div>
+    <>
+      <PageHeader
+        index="04"
+        label="Contact"
+        aside={profile.location}
+        title={[{ text: "Let's" }, { text: "talk.", accent: true }]}
+        intro="Open to SWE internships and full-time roles, and to collaborating on projects. Reach me through any of the channels below."
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 flex-1">
-          {/* Left: Send me an Email */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="flex h-full"
-          >
-            <div className="relative flex-1 flex flex-col">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]" />
-              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10 flex flex-col justify-between">
-                <div>
-                  <CardHeader>
-                    <CardTitle>Send me an Email</CardTitle>
-                    <CardDescription>
-                      Click the button below to open your email client and send me a message directly.
-                    </CardDescription>
-                  </CardHeader>
-                </div>
-                {/* Friendly message and large envelope icon in the middle */}
-                <div className="flex flex-col items-center justify-center flex-1">
-                  <Mail className="h-16 w-16 text-primary/60 mb-4 animate-pulse" />
-                  <span className="text-muted-foreground text-lg text-center">Let&apos;s build something amazing together!</span>
-                </div>
-                <CardContent className="flex flex-col items-center justify-end pb-8 flex-1 w-full">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="flex items-center gap-2 text-lg px-6 py-3 w-full mt-4"
-                    variant="default"
+      <section aria-label="Contact details" className="shell pb-24 lg:pb-32">
+        <div className="grid gap-x-12 gap-y-14 border-t border-rule pt-12 lg:grid-cols-12 lg:pt-16">
+          <div className="min-w-0 lg:col-span-8">
+            <Reveal>
+              <p className="eyebrow mb-4">Write to me</p>
+              <a
+                href={`mailto:${profile.email}`}
+                className="link-draw break-all font-display text-[clamp(1.5rem,0.9rem+2.8vw,3.5rem)] font-medium leading-tight tracking-tight hover:text-signal"
+              >
+                {profile.email}
+              </a>
+              <div className="mt-6">
+                <CopyButton
+                  value={profile.email}
+                  label="Copy email"
+                  className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm transition-colors hover:border-foreground"
+                />
+              </div>
+            </Reveal>
+
+            <ul className="mt-16 border-b border-rule">
+              {channels.map((c, i) => (
+                <Reveal as="li" key={c.label} delay={Math.min(i * 0.04, 0.2)} className="border-t border-rule">
+                  <a
+                    href={c.href}
+                    target={c.external ? "_blank" : undefined}
+                    rel={c.external ? "noopener noreferrer" : undefined}
+                    className="group grid grid-cols-[6rem_1fr_auto] items-baseline gap-4 py-6 transition-colors hover:text-signal sm:grid-cols-[9rem_1fr_auto]"
                   >
-                    <a href="mailto:mustufashadab123@gmail.com">
-                      <Mail className="h-6 w-6" />
-                      Email
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </motion.div>
+                    <span className="eyebrow flex items-center gap-2 transition-colors group-hover:text-signal">
+                      {c.icon && <WhatsAppIcon className="h-3.5 w-3.5" />}
+                      {c.label}
+                    </span>
+                    <span className="min-w-0 truncate font-display text-xl font-medium tracking-tight sm:text-2xl">
+                      {c.value}
+                    </span>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="h-5 w-5 text-faint transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-signal"
+                    />
+                  </a>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
 
-          {/* Right: Info cards stacked */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            {/* Contact Details */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]" />
-              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
-                <CardHeader>
-                  <CardTitle>Contact Information</CardTitle>
-                  <CardDescription>Feel free to reach out through any of these channels.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Mail className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Email</p>
-                      <p className="text-muted-foreground">mustufashadab123@gmail.com</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Phone className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Phone</p>
-                      <p className="text-muted-foreground">+92-309-3300668</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <MapPin className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Location</p>
-                      <p className="text-muted-foreground">Karachi, Pakistan</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          <Reveal delay={0.1} className="lg:col-span-4">
+            <div className="space-y-10 lg:sticky lg:top-28">
+              <div>
+                <h2 className="eyebrow mb-5">Availability</h2>
+                <ul className="space-y-4">
+                  {profile.availability.map((a) => (
+                    <li key={a.label} className="flex items-start gap-3">
+                      <span
+                        aria-hidden="true"
+                        className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${a.status === "open" ? "bg-signal" : "bg-faint"}`}
+                      />
+                      <span className="leading-snug">{a.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="border-t border-rule pt-6">
+                <h2 className="eyebrow mb-3">Local time</h2>
+                <LocalTime
+                  timeZone={profile.timeZone}
+                  label={profile.location}
+                  className="block font-display text-2xl font-semibold tabular-nums tracking-tight [&>span]:text-signal"
+                />
+              </div>
             </div>
-            {/* Social Links */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 to-purple-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]" />
-              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
-                <CardHeader>
-                  <CardTitle>Connect with me</CardTitle>
-                  <CardDescription>Follow me on social media for updates and insights.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <TooltipProvider>
-                    <div className="flex space-x-4">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="outline" size="icon" asChild>
-                            <a href="https://github.com/mustafadev123" target="_blank" rel="noopener noreferrer">
-                              <Github className="h-5 w-5" />
-                            </a>
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>GitHub</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="outline" size="icon" asChild>
-                            <a href="https://www.linkedin.com/in/muhammad-mustufa-02a108230/" target="_blank" rel="noopener noreferrer">
-                              <Linkedin className="h-5 w-5" />
-                            </a>
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>LinkedIn</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="outline" size="icon" asChild>
-                            <a href="mailto:mustufashadab123@gmail.com">
-                              <Mail className="h-5 w-5" />
-                            </a>
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Email</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="outline" size="icon" asChild className="text-green-500 hover:text-green-600 hover:border-green-500">
-                            <a 
-                              href="https://wa.me/923093300668?text=Hi%20Muhammad%2C%20I%20visited%20your%20portfolio%20website%20and%20I'm%20interested%20in%20discussing%20a%20potential%20project%20or%20opportunity." 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                            >
-                              <WhatsAppIcon className="h-5 w-5" />
-                            </a>
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>WhatsApp</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </TooltipProvider>
-                </CardContent>
-              </Card>
-            </div>
-            {/* Availability */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/15 to-pink-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]" />
-              <Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
-                <CardHeader>
-                  <CardTitle>Availability</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full" />
-                      <span className="text-sm">Available for freelance projects</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full" />
-                      <span className="text-sm">Open to collaboration</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                      <span className="text-sm">Currently studying at LUMS</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </motion.div>
+          </Reveal>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   )
 }
