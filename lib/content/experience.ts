@@ -13,6 +13,22 @@ export const experience: Experience[] = [
     highlights: [],
   },
   {
+    // Company name withheld at the owner's request; keep client names out too
+    company: "Fintech solutions provider · MENA",
+    role: "Machine Learning Engineer (Contract)",
+    period: "Jun 2025 – Dec 2025",
+    highlights: [
+      "Architected and deployed an enterprise-grade text-to-SQL pipeline using agentic RAG and a semantic layer architecture for a fintech data platform, enabling natural-language database querying with 95%+ accuracy and reducing query development time by 80%.",
+      "Built a human-in-the-loop feedback system that processes natural-language corrections to continuously improve query accuracy, with automated retraining pipelines that adapt to evolving business requirements and schema changes in production.",
+      "Shipped the internal text-to-SQL tool to the team and worked on their internal RAG tool.",
+    ],
+    summary: [
+      "Shipped an agentic-RAG text-to-SQL pipeline with a semantic layer: 95%+ accuracy, 80% faster query development",
+      "Human-in-the-loop feedback with automated retraining for schema changes in production",
+      "Worked on the internal RAG tool",
+    ],
+  },
+  {
     company: "Google Summer of Code – Google DeepMind",
     role: "Open Source Contributor (LLM Infrastructure)",
     period: "May 2025 – Aug 2025",

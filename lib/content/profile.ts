@@ -65,7 +65,7 @@ export const profile = {
   ],
   bio: [
     "I'm a software engineer who builds the systems that make AI useful: backends, data pipelines, and LLM infrastructure that hold up in production. I'm currently pursuing an MS in Computer Science at Georgia State University, where I'm also a teaching assistant for software engineering, after a BSc in Computer Science from LUMS.",
-    "As a Google Summer of Code contributor with Google DeepMind, I built batching pipelines for Gemma 2 embedding generation in KerasHub. Before that I engineered Laravel backends for the World Bank–funded CLICK platform serving 16M+ citizens of Karachi, and a real-time OpenCV vehicle-detection pipeline for the Sindh Smart Surveillance System.",
+    "As a contract machine learning engineer for a fintech company in the MENA region, I shipped a production text-to-SQL pipeline built on agentic RAG, reaching 95%+ query accuracy. In parallel, as a Google Summer of Code contributor with Google DeepMind, I built batching pipelines for Gemma 2 embedding generation in KerasHub. Before that I engineered Laravel backends for the World Bank–funded CLICK platform serving 16M+ citizens of Karachi, and a real-time OpenCV vehicle-detection pipeline for the Sindh Smart Surveillance System.",
     "My projects span multi-agent analytics, a Raft-based distributed key-value store, RAG assistants deployed in hospitals, and explainable medical imaging. I care about the full path from model to backend to an interface people can actually use.",
   ],
 } as const
