@@ -1,281 +1,177 @@
-"use client"
-
-import { motion } from "framer-motion"
+import type { Metadata } from "next"
 import Link from "next/link"
-import { Download, MapPin, Mail, Phone } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { ArrowDownRight, ArrowRight } from "lucide-react"
+import { PageHeader } from "@/components/page-header"
+import { SectionHeader } from "@/components/section-header"
+import { Reveal } from "@/components/reveal"
+import { ExperienceTimeline } from "@/components/home/experience-timeline"
+import { Toolkit } from "@/components/home/toolkit"
+import { currentEducation, profile } from "@/lib/content"
 
-const skills = [
-	{
-		category: "Programming Languages",
-		items: ["Python", "C++", "Java", "Go", "C", "Ruby on Rails"],
-	},
-	{
-		category: "Frameworks & Libraries",
-		items: ["Node.js", "Spring Boot", "Laravel", "Django", "React Native"],
-	},
-	{ category: "Databases", items: ["MySQL", "MongoDB"] },
-	{ category: "Tools & Platforms", items: ["Git", "Docker", "AWS"] },
-]
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Muhammad Mustufa is a software engineer working across backend systems and applied AI, pursuing an MS in Computer Science at Georgia State University.",
+}
 
-const experiences = [
-	{
-		company: "The Synergates Business Solutions",
-		role: "Backend Engineer",
-		period: "Jun 2024 - Aug 2024",
-		achievements: [
-			"Engineered scalable backend systems using Laravel MVC for government-level website",
-			"Reduced loading times by 15% through server performance optimization",
-			"Developed APIs and database schema for Markea App (React Native wedding hall search platform)",
-			"Enhanced AI-powered Breast Cancer Club App backend integration",
-			"Integrated OpenCV with .NET framework for Sindh Smart Surveillance System",
-		],
-	},
-	{
-		company: "10Pearls Pakistan",
-		role: "SWE Intern",
-		period: "Jun 2024 - Jul 2024",
-		achievements: [
-			"Built full stack CRUD application using MySQL, Java Spring Boot, React, and Tailwind CSS",
-			"Reduced software bugs by 30% through comprehensive testing with JUnit and Selenium",
-			"Improved user interface consistency and API reliability",
-		],
-	},
-	{
-		company: "Netsol Pakistan",
-		role: "SWE Intern",
-		period: "May 2023 - Aug 2023",
-		achievements: [
-			"Developed Python scripts using Flask to automate testing of Flex calculation engine",
-			"Assisted in integrating new calculation modules into Flex API",
-			"Contributed to faster processing times and improved scalability",
-		],
-	},
-	{
-		company: "GERRY'S INFORMATION TECHNOLOGY",
-		role: "SWE Intern",
-		period: "Jul 2023 – Sep 2023",
-		achievements: [
-			"Optimized website performance by implementing transitioning hooks, achieving a 30% reduction in page load times.",
-			"Designed responsive web interfaces, leading to a 40% increase in mobile traffic and a 25% boost in user engagement.",
-			"Collaborated with cross-functional teams to develop scalable front-end solutions for aviation companies and FedEx.",
-		],
-	},
-]
+export default function AboutPage() {
+  const status = profile.availability.find((a) => a.status === "open")
+  const [lead, ...rest] = profile.bio
 
-export default function About() {
-	return (
-		<div className="min-h-screen pt-16">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-				{/* Header */}
-				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
-					className="text-center mb-16"
-				>
-					<h1 className="text-4xl sm:text-5xl font-bold mb-6">About Me</h1>
-					<p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-						Passionate about building innovative solutions that bridge technology
-						and real-world impact
-					</p>
-				</motion.div>
+  const facts = [
+    { term: "Currently", value: `${currentEducation.degree}, ${currentEducation.school}` },
+    { term: "Based in", value: profile.location },
+    ...(status ? [{ term: "Status", value: status.label }] : []),
+  ]
 
-				{/* Bio Section */}
-				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
-					viewport={{ once: true }}
-					className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20"
-				>
-					<div>
-						<h2 className="text-3xl font-bold mb-6">My Story</h2>
-						<div className="space-y-4 text-muted-foreground">
-							<p>
-								I&apos;m a Software Engineer with hands-on experience building scalable
-								backend systems, secure APIs, and AI-integrated solutions.
-								Currently pursuing my BSc in Computer Science at Lahore University
-								of Management Sciences (LUMS).
-							</p>
-							<p>
-								My expertise spans across multiple technologies including Laravel,
-								Spring Boot, and React, with a strong focus on system optimization,
-								cross-functional teamwork, and deploying full-stack applications
-								across real-world platforms.
-							</p>
-							<p>
-								I&apos;m particularly passionate about machine learning and AI, having
-								developed diagnostic tools and classification systems that achieve
-								state-of-the-art performance. My goal is to create technology that
-								makes a meaningful difference in people&apos;s lives.
-							</p>
-						</div>
+  return (
+    <>
+      <PageHeader
+        index="02"
+        label="About"
+        aside={profile.location}
+        title={[{ text: "Hi, I'm" }, { text: "Muhammad.", accent: true }]}
+        intro={profile.role}
+      />
 
-						<div className="mt-8 flex flex-col sm:flex-row gap-4">
-							<Button asChild>
-								<Link href="/resume.pdf" target="_blank">
-									<Download className="mr-2 h-4 w-4" />
-									Download Resume
-								</Link>
-							</Button>
-							<Button variant="outline" asChild>
-								<Link href="/contact">Get In Touch</Link>
-							</Button>
-						</div>
-					</div>
+      {/* Story + quick facts */}
+      <section aria-label="Story" className="shell pb-20 lg:pb-28">
+        <div className="grid gap-x-12 gap-y-14 border-t border-rule pt-12 lg:grid-cols-12 lg:pt-16">
+          <Reveal className="space-y-6 lg:col-span-7">
+            <p className="text-pretty font-display text-[clamp(1.375rem,1.1rem+1vw,2rem)] font-medium leading-snug tracking-tight">
+              {lead}
+            </p>
+            {rest.map((p) => (
+              <p key={p} className="max-w-[64ch] text-pretty text-lg leading-relaxed text-muted-foreground">
+                {p}
+              </p>
+            ))}
+          </Reveal>
 
-					<div className="space-y-6">
-						<div className="relative">
-							<div className="absolute inset-0 bg-gradient-to-r from-blue-500/15 to-blue-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
-							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
-								<CardContent className="p-6">
-									<h3 className="font-semibold mb-4">Contact Information</h3>
-									<div className="space-y-3">
-										<div className="flex items-center gap-3">
-											<MapPin className="h-4 w-4 text-muted-foreground" />
-											<span>Karachi, Pakistan</span>
-										</div>
-										<div className="flex items-center gap-3">
-											<Phone className="h-4 w-4 text-muted-foreground" />
-											<span>+92-309-3300668</span>
-										</div>
-										<div className="flex items-center gap-3">
-											<Mail className="h-4 w-4 text-muted-foreground" />
-											<span>mustufashadab123@gmail.com</span>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
-						</div>
+          <Reveal delay={0.1} className="lg:col-span-4 lg:col-start-9">
+            <div className="lg:sticky lg:top-28">
+              <dl className="divide-y divide-rule border-y border-rule">
+                {facts.map((f) => (
+                  <div key={f.term} className="grid grid-cols-[6.5rem_1fr] gap-4 py-4">
+                    <dt className="eyebrow pt-1">{f.term}</dt>
+                    <dd className="text-sm leading-relaxed">{f.value}</dd>
+                  </div>
+                ))}
+                <div className="grid grid-cols-[6.5rem_1fr] gap-4 py-4">
+                  <dt className="eyebrow pt-1">Email</dt>
+                  <dd className="text-sm">
+                    <a href={`mailto:${profile.email}`} className="link-draw break-all hover:text-signal">
+                      {profile.email}
+                    </a>
+                  </dd>
+                </div>
+                <div className="grid grid-cols-[6.5rem_1fr] gap-4 py-4">
+                  <dt className="eyebrow pt-1">Phone</dt>
+                  <dd className="text-sm">
+                    <a href={`tel:${profile.phone.replace(/[^\d+]/g, "")}`} className="link-draw hover:text-signal">
+                      {profile.phone}
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a
+                  href={profile.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition-colors hover:bg-signal"
+                >
+                  Download résumé
+                  <ArrowDownRight aria-hidden="true" className="h-4 w-4" />
+                </a>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 text-sm font-medium transition-colors hover:border-foreground"
+                >
+                  Get in touch
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </div>
 
-						<div className="relative">
-							<div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 to-purple-600/25 blur-md rounded-xl transform translate-y-1 scale-[0.98]"></div>
-							<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
-								<CardContent className="p-6">
-									<h3 className="font-semibold mb-4">Education</h3>
-									<div>
-										<h4 className="font-medium">
-											Lahore University of Management Sciences (LUMS)
-										</h4>
-										<p className="text-sm text-muted-foreground">
-											BSc, Computer Science • GPA: 3.70 • Jun 2026
-										</p>
-										<p className="text-sm text-muted-foreground mt-2">
-											Coursework: OOP, Data Structures, AI, Machine Learning, Deep
-											Learning, Computer Vision, Software Engineering, Distributed
-											Systems
-										</p>
-									</div>
-								</CardContent>
-							</Card>
-						</div>
-					</div>
-				</motion.div>
+        {/* Proof */}
+        <dl className="mt-20 grid gap-x-8 gap-y-8 border-t border-rule pt-8 sm:grid-cols-2 lg:grid-cols-4">
+          {profile.proof.map((item, i) => (
+            <Reveal key={item.value} delay={i * 0.05}>
+              <dt className="font-display text-[2.5rem] font-semibold leading-none tracking-tight">{item.value}</dt>
+              <dd className="mt-3 text-sm leading-snug text-muted-foreground">{item.label}</dd>
+            </Reveal>
+          ))}
+        </dl>
+      </section>
 
-				{/* Skills Section */}
-				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
-					viewport={{ once: true }}
-					className="mb-20"
-				>
-					<h2 className="text-3xl font-bold text-center mb-12">
-						Technical Skills
-					</h2>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-						{skills.map((skillGroup, index) => (
-							<motion.div
-								key={skillGroup.category}
-								initial={{ opacity: 0, y: 20 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.5, delay: index * 0.1 }}
-								viewport={{ once: true }}
-							>
-								<div className="relative h-full">
-									<div className={`absolute inset-0 bg-gradient-to-r ${
-										index % 3 === 0 ? 'from-blue-500/15 to-blue-600/25' : 
-										index % 3 === 1 ? 'from-purple-500/15 to-purple-600/25' : 
-										'from-pink-500/15 to-pink-600/25'
-									} blur-md rounded-xl transform translate-y-1 scale-[0.98]`}></div>
-									<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
-										<CardContent className="p-6">
-											<h3 className="font-semibold mb-4">{skillGroup.category}</h3>
-											<div className="space-y-2">
-												{skillGroup.items.map((skill) => (
-													<span
-														key={skill}
-														className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm mr-2 mb-2"
-													>
-														{skill}
-													</span>
-												))}
-											</div>
-										</CardContent>
-									</Card>
-								</div>
-							</motion.div>
-						))}
-					</div>
-				</motion.div>
+      {/* Education */}
+      <section aria-labelledby="education-title" className="shell py-20 lg:py-28">
+        <SectionHeader index="01" label="Education" id="education-title" title="Where I've studied" />
+        <ol className="border-b border-rule">
+          {profile.education.map((ed, i) => (
+            <Reveal
+              as="li"
+              key={ed.school}
+              delay={i * 0.05}
+              className="grid gap-x-8 gap-y-4 border-t border-rule py-9 lg:grid-cols-12"
+            >
+              <div className="lg:col-span-3">
+                <p className="font-mono text-xs uppercase tracking-[0.12em]">{ed.period}</p>
+                <p className="eyebrow mt-2">{ed.location}</p>
+              </div>
+              <div className="lg:col-span-5">
+                <h3 className="text-balance font-display text-2xl font-semibold leading-tight tracking-tight sm:text-[1.75rem]">
+                  {ed.school}
+                </h3>
+                <p className="mt-2 text-muted-foreground">
+                  {ed.degree}
+                  {"gpa" in ed && ` · GPA ${ed.gpa}`}
+                </p>
+              </div>
+              {"coursework" in ed && (
+                <div className="lg:col-span-4">
+                  <h4 className="eyebrow mb-3">Coursework</h4>
+                  <p className="text-pretty leading-relaxed text-muted-foreground">{ed.coursework.join(" · ")}</p>
+                </div>
+              )}
+            </Reveal>
+          ))}
+        </ol>
+      </section>
 
-				{/* Experience Section */}
-				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
-					viewport={{ once: true }}
-				>
-					<h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
-					<div className="space-y-8">
-						{experiences.map((exp, index) => (
-							<motion.div
-								key={exp.company}
-								initial={{ opacity: 0, x: -30 }}
-								whileInView={{ opacity: 1, x: 0 }}
-								transition={{ duration: 0.5, delay: index * 0.1 }}
-								viewport={{ once: true }}
-							>
-								<div className="relative">
-									<div className={`absolute inset-0 bg-gradient-to-r ${
-										index % 3 === 0 ? 'from-blue-500/15 to-blue-600/25' : 
-										index % 3 === 1 ? 'from-purple-500/15 to-purple-600/25' : 
-										'from-pink-500/15 to-pink-600/25'
-									} blur-md rounded-xl transform translate-y-1 scale-[0.98]`}></div>
-									<Card className="h-full relative bg-card/90 backdrop-blur-sm z-10">
-										<CardContent className="p-6">
-											<div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-												<div>
-													<h3 className="text-xl font-semibold">{exp.role}</h3>
-													<p className="text-primary font-medium">
-														{exp.company}
-													</p>
-												</div>
-												<span className="text-sm text-muted-foreground">
-													{exp.period}
-												</span>
-											</div>
-											<ul className="space-y-2">
-												{exp.achievements.map((achievement, i) => (
-													<li
-														key={i}
-														className="text-muted-foreground flex items-start"
-													>
-														<span className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
-														{achievement}
-													</li>
-												))}
-											</ul>
-										</CardContent>
-									</Card>
-								</div>
-							</motion.div>
-						))}
-					</div>
-				</motion.div>
-			</div>
-		</div>
-	)
+      <ExperienceTimeline index="02" detailed />
+
+      <div className="pb-20 lg:pb-28">
+        <Toolkit index="03" marquee={false} />
+      </div>
+
+      {/* Next steps */}
+      <section aria-label="Next" className="shell pb-24">
+        <div className="grid gap-6 border-t border-rule pt-10 sm:grid-cols-2">
+          <Link href="/projects" className="group block">
+            <p className="eyebrow mb-3">Next</p>
+            <p className="inline-flex items-center gap-3 font-display text-display-md font-semibold">
+              <span className="link-draw">See the work</span>
+              <ArrowRight
+                aria-hidden="true"
+                className="h-[0.7em] w-[0.7em] text-signal transition-transform duration-500 ease-out-expo group-hover:translate-x-1"
+              />
+            </p>
+          </Link>
+          <Link href="/contact" className="group block sm:text-right">
+            <p className="eyebrow mb-3">Or</p>
+            <p className="inline-flex items-center gap-3 font-display text-display-md font-semibold">
+              <span className="link-draw">Say hello</span>
+              <ArrowRight
+                aria-hidden="true"
+                className="h-[0.7em] w-[0.7em] text-signal transition-transform duration-500 ease-out-expo group-hover:translate-x-1"
+              />
+            </p>
+          </Link>
+        </div>
+      </section>
+    </>
+  )
 }

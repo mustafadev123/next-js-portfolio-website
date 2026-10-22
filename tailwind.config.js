@@ -52,6 +52,9 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        signal: "hsl(var(--signal) / <alpha-value>)",
+        rule: "hsl(var(--rule) / <alpha-value>)",
+        faint: "hsl(var(--faint) / <alpha-value>)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -59,8 +62,18 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "Consolas", "monospace"],
+      },
+      fontSize: {
+        // Fluid display scale
+        "display-xl": ["clamp(2.6rem, 1rem + 5.2vw, 6.25rem)", { lineHeight: "0.94", letterSpacing: "-0.032em" }],
+        "display-lg": ["clamp(2.25rem, 1.2rem + 4.4vw, 5.5rem)", { lineHeight: "0.95", letterSpacing: "-0.04em" }],
+        "display-md": ["clamp(1.75rem, 1.2rem + 2.2vw, 3.25rem)", { lineHeight: "1", letterSpacing: "-0.03em" }],
+      },
+      transitionTimingFunction: {
+        "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         "accordion-down": {

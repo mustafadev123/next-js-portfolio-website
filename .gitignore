@@ -25,3 +25,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Raw 4K demo recording (~1 GB): too large for git/Vercel. Host it (e.g. YouTube) or add a compressed copy.
+public/Guidewing_v2_demo.mp4

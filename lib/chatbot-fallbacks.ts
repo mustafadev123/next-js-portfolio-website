@@ -7,10 +7,10 @@ type FallbackResponse = {
 };
 
 const greetings = [
-  "Hello! Have you met an undergraduate student who has balanced both academic life with industrial life? You've stumbled upon one of the few who have done it. I'm Muhammad's portfolio assistant, ready to tell you about his exceptional journey!",
-  "Hello there! Ever wondered how someone can excel in academics while gaining real industrial experience? Let me introduce you to Muhammad Mustafa, a rare talent balancing both worlds. How can I help you learn more?",
-  "Hello! I'm Muhammad's portfolio assistant. You've found someone who truly stands out - an undergraduate successfully balancing academic excellence with impressive industrial experience. What would you like to know about his journey?",
-  "Hello and welcome! Muhammad Mustafa represents that rare breed of students who excel both in academics and industry work simultaneously. I'm here to help you explore his remarkable portfolio!"
+  "Hello! I'm Muhammad Mustufa's AI assistant. He's a software engineer who builds the systems that make AI useful, from multi-agent analytics to real-time computer vision. What would you like to know?",
+  "Hello there! Meet Muhammad Mustufa, a software engineer working across backend systems and applied AI, and an MS Computer Science student at Georgia State University. How can I help you learn more?",
+  "Hello! I'm Muhammad's portfolio assistant. Ask me about his Google Summer of Code work with Google DeepMind, his backend engineering, or his AI projects.",
+  "Hello and welcome! I can walk you through Muhammad Mustufa's experience, projects, and skills. Where would you like to start?"
 ];
 
 const projectResponses = [
@@ -34,8 +34,8 @@ const skillResponses = [
 ];
 
 const aboutResponses = [
-  "Muhammad is a Software Engineer and ML Enthusiast currently studying BSc Computer Science at LUMS with a GPA of 3.70. He has experience at multiple companies and a passion for building innovative solutions. What would you like to know about him?",
-  "Muhammad Mustafa is studying Computer Science at LUMS and has professional experience as a Backend Engineer and SWE Intern. He specializes in both software development and machine learning. Any specific aspect of his background you're curious about?"
+  "Muhammad is a software engineer focused on backend systems and applied AI. He's pursuing an MS in Computer Science at Georgia State University after a BSc in Computer Science from LUMS. What would you like to know about him?",
+  "Muhammad Mustufa has worked as a Google Summer of Code contributor with Google DeepMind, a Backend Engineer at The Synergates Business Solutions, and an SWE Intern at 10Pearls. Any specific aspect of his background you're curious about?"
 ];
 
 const contactResponses = [

@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { useRouter } from "next/navigation"
 import { getFallbackResponse } from "@/lib/chatbot-fallbacks"
 import { projects } from "@/lib/projects-data"
+import { CHATBOT_OPEN_EVENT } from "@/components/chatbot-events"
 
 interface Message {
   id: string
@@ -42,11 +43,17 @@ export function Chatbot() {
   }, [messages])
 
   useEffect(() => {
+    const open = () => setIsOpen(true)
+    window.addEventListener(CHATBOT_OPEN_EVENT, open)
+    return () => window.removeEventListener(CHATBOT_OPEN_EVENT, open)
+  }, [])
+
+  useEffect(() => {
     if (isOpen && messages.length === 0) {
       // Add welcome message when chatbot opens for the first time
       setTimeout(() => {
         addBotMessage(
-          "Hello! Have you met an undergraduate student who has balanced both academic life with industrial life? You've stumbled upon one of the few who have done it. I'm Muhammad's AI assistant, ready to help you explore his impressive journey, projects, and skills. What would you like to know?",
+          "Hello! I'm Muhammad Mustufa's AI assistant. He's a software engineer who builds the systems that make AI useful, from multi-agent analytics to real-time computer vision. What would you like to know?",
           ["Tell me about Muhammad", "Show me his projects", "What are his skills?", "Contact information"],
         )
       }, 500)
@@ -88,7 +95,7 @@ export function Chatbot() {
       // Only respond with a quick greeting for the first interaction
       setTimeout(() => {
         addBotMessage(
-          `Hello! Have you met an undergraduate student who has balanced both academic life with industrial life? You've stumbled upon one of the few who have done it. I'm Muhammad's AI assistant - how can I help you explore his impressive journey?`,
+          `Hello! I'm Muhammad Mustufa's AI assistant. He's a software engineer who builds the systems that make AI useful, from multi-agent analytics to real-time computer vision. What would you like to know?`,
           ["Tell me about his projects", "What skills does he have?", "Show his work experience"]
         );
         setIsLoading(false);
@@ -283,7 +290,9 @@ export function Chatbot() {
         <Button
           onClick={() => setIsOpen(!isOpen)}
           size="lg"
-          className="w-14 h-14 rounded-full shadow-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-0 animate-pulse-glow"
+          aria-label={isOpen ? "Close AI assistant" : "Open AI assistant"}
+          aria-expanded={isOpen}
+          className="w-14 h-14 rounded-full shadow-lg bg-signal text-background hover:bg-signal/90 border-0"
         >
           <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
             {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
@@ -301,11 +310,11 @@ export function Chatbot() {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] z-50"
           >
-            <Card className="shadow-2xl border-0 bg-background/95 backdrop-blur-xl">
+            <Card className="shadow-2xl border border-border bg-card">
               <CardHeader className="pb-3">
-                <CardTitle className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                    <Bot className="h-4 w-4 text-white" />
+                <CardTitle className="flex items-center space-x-2 text-base">
+                  <div className="w-8 h-8 bg-signal rounded-full flex items-center justify-center">
+                    <Bot className="h-4 w-4 text-background" />
                   </div>
                   <span>Portfolio Assistant</span>
                   <div className="flex items-center space-x-1 ml-auto">
@@ -351,7 +360,7 @@ export function Chatbot() {
                       >
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
-                            message.isBot ? "bg-gradient-to-r from-blue-600 to-purple-600" : "bg-primary"
+                            message.isBot ? "bg-signal" : "bg-foreground"
                           }`}
                         >
                           {message.isBot ? (
@@ -393,7 +402,7 @@ export function Chatbot() {
                       className="flex justify-start"
                     >
                       <div className="flex items-start space-x-2">
-                        <div className="w-6 h-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                        <div className="w-6 h-6 bg-signal rounded-full flex items-center justify-center">
                           <Bot className="h-3 w-3 text-white" />
                         </div>
                         <div className="bg-muted rounded-lg p-3">
