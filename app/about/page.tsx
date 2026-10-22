@@ -107,7 +107,7 @@ export default function AboutPage() {
       </section>
 
       {/* Education */}
-      <section aria-labelledby="education-title" className="shell py-20 lg:py-28">
+      <section aria-labelledby="education-title" className="shell">
         <SectionHeader index="01" label="Education" id="education-title" title="Where I've studied" />
         <ol className="border-b border-rule">
           {profile.education.map((ed, i) => (

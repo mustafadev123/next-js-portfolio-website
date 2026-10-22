@@ -438,6 +438,28 @@ html.intro-hold .core-layer {
   color: #ff5a1f;
 }
 
+/* Generated project cover adapts to its own size (thumbnails show monogram + dots only) */
+.pfb {
+  container-type: inline-size;
+}
+@container (max-width: 220px) {
+  .pfb {
+    padding: 0.6rem;
+  }
+  .pfb-cat {
+    display: none;
+  }
+  .pfb-mono {
+    font-size: 2.25rem;
+  }
+  .pfb-dots {
+    top: 0.4rem;
+    right: 0.4rem;
+    width: 3.25rem;
+    height: 2.75rem;
+  }
+}
+
 /* Once the WebGL core is live, the static SVG steps aside (it stays as the fallback) */
 html[data-core="live"] .core-fallback {
   opacity: 0;

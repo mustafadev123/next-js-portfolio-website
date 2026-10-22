@@ -28,6 +28,8 @@ export interface Project {
   liveUrl?: string | null
   githubUrl?: string | null
   featured?: boolean
+  /** Flagship: gets a full showcase on the home page (keep to about three). */
+  spotlight?: boolean
   year?: string
   slug?: string
   caseStudy?: CaseStudy

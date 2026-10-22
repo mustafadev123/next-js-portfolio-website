@@ -10,13 +10,17 @@ export const projects: Project[] = [
       "AI-driven analytics platform that automatically profiles datasets and generates dashboards and KPIs from natural-language queries using an LLM-powered assistant, with medallion-architecture pipelines across Snowflake, PostgreSQL, and BigQuery.",
     summary:
       "Profiles datasets and turns natural-language questions into dashboards and KPIs through multi-agent orchestration.",
-    image: "/continuumai.png",
+    // Dashboard frame from the demo video (youtube.com/watch?v=rcmeS7pLnzQ)
+    image: "/continuumai-dashboard.jpg",
     technologies: ["FastAPI", "Next.js", "PostgreSQL", "Redis", "OpenAI", "Snowflake", "BigQuery"],
     category: "Analytics",
     liveUrl: "https://www.youtube.com/watch?v=rcmeS7pLnzQ&t=27s",
     githubUrl: null,
     featured: true,
+    spotlight: true,
     caseStudy: {
+      contribution:
+        "Built the AI-driven analytics platform: automatic dataset profiling, LLM-generated dashboards and KPIs from natural-language questions, and medallion-architecture pipelines with PostgreSQL and Redis caching.",
       technicalDepth: [
         "Medallion-architecture data pipelines with PostgreSQL and Redis caching",
         "Multi-agent orchestration for automated insight generation",
@@ -37,6 +41,7 @@ export const projects: Project[] = [
     liveUrl: "https://youtu.be/XbiNkC0ZHZ8",
     githubUrl: null,
     featured: true,
+    spotlight: true,
     caseStudy: {
       problem:
         "Basic object detection isn't enough: users need to know the system understood them and what happens after they ask for help, and the responder's job has to be accessible too.",
@@ -81,6 +86,7 @@ export const projects: Project[] = [
     liveUrl: "https://www.youtube.com/watch?v=rZnx14GW3YI",
     githubUrl: "https://github.com/mustafadev123/screenshot-zero",
     featured: true,
+    spotlight: true,
   },
   {
     title: "Simulating Physicians: Persona Effects in Clinical LLMs",
@@ -226,6 +232,7 @@ export const getProjectSlug = (project: Project) =>
     .replace(/^-|-$/g, "")
 
 export const featuredProjects = projects.filter((p) => p.featured)
+export const spotlightProjects = featuredProjects.filter((p) => p.spotlight)
 
 /** Filter categories in first-seen order, so new categories appear automatically. */
 export const projectCategories = ["All", ...new Set(projects.map((p) => p.category))]

@@ -11,7 +11,7 @@ export function ContactCta() {
   ]
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="shell scroll-mt-24 pb-16">
+    <section id="contact" aria-labelledby="contact-title" className="shell scroll-mt-24 pb-16 pt-24 lg:pt-32">
       <div className="border-t border-rule pt-6">
         <p className="eyebrow flex items-center gap-3">
           <span className="text-signal">04</span>

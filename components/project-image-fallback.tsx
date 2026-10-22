@@ -23,9 +23,9 @@ export function ProjectImageFallback({ project, className }: { project: Project;
     <div
       role="img"
       aria-label={`${project.title} (no preview image)`}
-      className={`relative flex h-full w-full items-end justify-between overflow-hidden bg-secondary p-4 ${className ?? ""}`}
+      className={`pfb relative flex h-full w-full items-end justify-between overflow-hidden bg-secondary p-4 ${className ?? ""}`}
     >
-      <svg aria-hidden="true" viewBox="0 0 112 96" className="absolute right-3 top-3 h-20 w-24 opacity-80">
+      <svg aria-hidden="true" viewBox="0 0 112 96" className="pfb-dots absolute right-3 top-3 h-20 w-24 opacity-80">
         {dots.map((d, i) => (
           <circle
             key={i}
@@ -36,10 +36,10 @@ export function ProjectImageFallback({ project, className }: { project: Project;
           />
         ))}
       </svg>
-      <span aria-hidden="true" className="font-display text-6xl font-semibold leading-none tracking-tighter text-foreground/90">
+      <span aria-hidden="true" className="pfb-mono font-display text-6xl font-semibold leading-none tracking-tighter text-foreground/90">
         {monogram}
       </span>
-      <span className="eyebrow">{project.category}</span>
+      <span className="pfb-cat eyebrow">{project.category}</span>
     </div>
   )
 }

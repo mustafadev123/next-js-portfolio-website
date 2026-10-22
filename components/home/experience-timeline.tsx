@@ -13,7 +13,7 @@ export function ExperienceTimeline({ index = "02", detailed = false }: { index?:
   const { scrollYProgress } = useScroll({ target: list, offset: ["start 75%", "end 55%"] })
 
   return (
-    <section id="experience" aria-labelledby="experience-title" className="shell scroll-mt-24 py-24 lg:py-36">
+    <section id="experience" aria-labelledby="experience-title" className="shell scroll-mt-24 pt-24 lg:pt-32">
       <SectionHeader
         index={index}
         label="Experience"

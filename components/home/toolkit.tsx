@@ -5,7 +5,7 @@ import { profile, skills } from "@/lib/content"
 
 export function Toolkit({ index = "03", marquee = true }: { index?: string; marquee?: boolean }) {
   return (
-    <section id="toolkit" aria-labelledby="toolkit-title" className="shell scroll-mt-24 pt-24 lg:pt-36">
+    <section id="toolkit" aria-labelledby="toolkit-title" className="shell scroll-mt-24 pt-24 lg:pt-32">
       <SectionHeader
         index={index}
         label="Toolkit"
