@@ -79,7 +79,7 @@ export const projects: Project[] = [
     title: "Screenshot Zero",
     description:
       "A mobile-first productivity app that turns screenshot clutter into actionable items by extracting intent, suggesting next steps, and helping users clear their camera roll to Inbox Zero.",
-    // Frame from the demo video (youtube.com/watch?v=rZnx14GW3YI)
+    // Onboarding screen from the Android app, framed on the app background
     image: "/screenshot_zero.jpg",
     technologies: ["Flutter", "Dart", "Riverpod", "ML Kit", "FastAPI", "OpenAI", "Android"],
     category: "Productivity",
