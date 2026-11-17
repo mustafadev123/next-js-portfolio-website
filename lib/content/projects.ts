@@ -135,6 +135,7 @@ export const projects: Project[] = [
     title: "Simulating Physicians: Persona Effects in Clinical LLMs",
     description:
       "Evaluated persona-conditioned diagnostic reasoning across six LLMs and nine geographic prompts using rubric-based scoring, revealing significant persona-driven performance shifts in clinical reasoning.",
+    awards: ["Accepted · IEEE BigData 2026"],
     image: null,
     technologies: ["Python", "LLMs", "Prompt Engineering", "Clinical NLP", "Statistical Analysis"],
     category: "Research",

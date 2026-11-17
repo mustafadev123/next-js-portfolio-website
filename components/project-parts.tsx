@@ -77,7 +77,7 @@ export function ProjectTagline({ project }: { project: Project }) {
 export function ProjectAwards({ project }: { project: Project }) {
   if (!project.awards?.length) return null
   return (
-    <ul aria-label="Awards" className="flex flex-wrap gap-2">
+    <ul aria-label="Recognition" className="flex flex-wrap gap-2">
       {project.awards.map((a) => (
         <li
           key={a}

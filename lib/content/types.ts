@@ -25,7 +25,7 @@ export interface Project {
   summary?: string
   /** One-line pitch shown above the summary on showcase layouts. */
   tagline?: string
-  /** Awards and placements, shown as badges. */
+  /** Awards, placements, and publication acceptances, shown as badges. */
   awards?: string[]
   /** Path under /public. Layouts render a generated fallback when this is missing. */
   image?: string | null
