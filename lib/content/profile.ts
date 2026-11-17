@@ -1,6 +1,6 @@
 import type { SkillGroup, SocialLink } from "./types"
 
-// Single source for personal details, synced with public/resume.pdf.
+// Single source for personal details, synced with public/Mustufa_Resume.pdf.
 // See docs/content-notes.md for open questions.
 
 export const profile = {
@@ -30,7 +30,7 @@ export const profile = {
   email: "mustufashadab123@gmail.com",
   phone: "+1 (470) 819-7646",
   website: "https://muhammadmustafa-portfolio.vercel.app",
-  resume: "/resume.pdf",
+  resume: "/Mustufa_Resume.pdf",
   availability: [
     { label: "Open to SWE internships / full-time roles", status: "open" },
     { label: "Open to collaboration", status: "open" },
