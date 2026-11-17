@@ -109,7 +109,7 @@ export const projects: Project[] = [
     technologies: ["Go", "Raft", "gRPC", "Distributed Systems", "Fault Tolerance"],
     category: "Distributed Systems",
     liveUrl: null,
-    githubUrl: null,
+    githubUrl: "https://github.com/mustafadev123/Raft",
     featured: true,
     caseStudy: {
       technicalDepth: [
