@@ -3,11 +3,13 @@ import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { SectionHeader } from "@/components/section-header"
 import { Reveal } from "@/components/reveal"
 import {
+  ProjectAwards,
   ProjectContribution,
   ProjectImpact,
   ProjectLinks,
   ProjectMedia,
   ProjectStack,
+  ProjectTagline,
 } from "@/components/project-parts"
 import { cn } from "@/lib/utils"
 import { featuredProjects, getProjectLinks, projects, spotlightProjects, type Project } from "@/lib/content"
@@ -64,6 +66,8 @@ function Flagship({ project, n, flip }: { project: Project; n: number; flip: boo
             project.title
           )}
         </h3>
+        <ProjectAwards project={project} />
+        <ProjectTagline project={project} />
         {/* What it does, always visible */}
         <p className="text-pretty text-lg leading-relaxed text-foreground/85">{project.summary ?? project.description}</p>
         <ProjectContribution project={project} />

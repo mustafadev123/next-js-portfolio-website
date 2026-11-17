@@ -5,6 +5,50 @@ import type { Project } from "./types"
 // without layout changes. Entries without an image render a generated fallback.
 export const projects: Project[] = [
   {
+    title: "TriageX",
+    description:
+      "An AI-powered emergency department surge coordination platform that forecasts hospital capacity, coordinates staffing through FaceTime, and measures the impact of interventions.",
+    tagline:
+      "Every ER capacity tool shows you the problem. TriageX connects the prediction to the people who can fix it.",
+    awards: ["1st Place, Healthcare Track · Emory Hacks 2026", "Winner, Best Use of Entire · Emory Hacks 2026"],
+    // Dashboard from the repo (docs/screenshots/1920x1080-8-final.png), padded to 16:10 so nothing is cropped
+    image: "/triagex-dashboard.webp",
+    technologies: [
+      "Python",
+      "FastAPI",
+      "React",
+      "TypeScript",
+      "WebSockets",
+      "Gemini",
+      "Chert",
+      "LiveKit",
+      "Tiger Data (TimescaleDB)",
+      "Entire",
+    ],
+    category: "Healthcare / AI Infrastructure",
+    year: "2026",
+    liveUrl: null,
+    githubUrl: "https://github.com/mustafadev123/TriageX",
+    featured: true,
+    spotlight: true,
+    caseStudy: {
+      contribution:
+        "Built the surge simulation, the FastAPI backend and real-time staffing dashboard, and the FaceTime coordination flow with Gemini voice and staff-card recognition.",
+      technicalDepth: [
+        "Deterministic simulation modeling patient surges across five Atlanta hospitals",
+        "FastAPI backend and real-time dashboard for staffing recommendations, approvals, and intervention comparisons",
+        "Chert FaceTime integration with Gemini-powered voice interaction and staff-card recognition, validated against the backend roster",
+        "Versioned hospital metrics persisted in TimescaleDB, with Entire checkpoints tracking AI-assisted development",
+      ],
+      impact: [
+        "36% fewer ambulance handoff delays (simulated)",
+        "25.50 → 16.25 aggregate ambulance-hours with three added staff (simulated)",
+        "45-minute faster recovery (simulated)",
+      ],
+      links: [{ label: "Devpost", href: "https://devpost.com/software/triagex-qk4ziw" }],
+    },
+  },
+  {
     title: "Multi-Agent Auto-Analytics System (ContinuumAI)",
     description:
       "AI-driven analytics platform that automatically profiles datasets and generates dashboards and KPIs from natural-language queries using an LLM-powered assistant, with medallion-architecture pipelines across Snowflake, PostgreSQL, and BigQuery.",
@@ -86,7 +130,6 @@ export const projects: Project[] = [
     liveUrl: "https://www.youtube.com/watch?v=rZnx14GW3YI",
     githubUrl: "https://github.com/mustafadev123/screenshot-zero",
     featured: true,
-    spotlight: true,
   },
   {
     title: "Simulating Physicians: Persona Effects in Clinical LLMs",
@@ -244,6 +287,7 @@ export function getProjectLinks(project: Project) {
     const video = /youtube\.com|youtu\.be|vimeo\.com/.test(project.liveUrl)
     links.push({ label: video ? "Watch demo" : "Live site", href: project.liveUrl, kind: video ? "video" : "live" })
   }
+  for (const l of project.caseStudy?.links ?? []) links.push({ label: l.label, href: l.href, kind: "live" })
   if (project.githubUrl) links.push({ label: "Source code", href: project.githubUrl, kind: "code" })
   return links
 }

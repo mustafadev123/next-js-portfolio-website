@@ -24,7 +24,8 @@ export function buildPortfolioContext() {
       const impact = p.caseStudy?.impact?.length ? `\n   - Results: ${p.caseStudy.impact.join("; ")}` : ""
       const part = p.caseStudy?.contribution ? `\n   - Muhammad's part: ${p.caseStudy.contribution}` : ""
       const team = p.caseStudy?.team ? `\n   - ${p.caseStudy.team}` : ""
-      return `${i + 1}. ${p.title}${link ? ` (${link})` : ""}\n   - ${p.description}\n   - Tech: ${p.technologies.join(", ")}${impact}${part}${team}`
+      const awards = p.awards?.length ? `\n   - Awards: ${p.awards.join("; ")}` : ""
+      return `${i + 1}. ${p.title}${link ? ` (${link})` : ""}\n   - ${p.description}\n   - Tech: ${p.technologies.join(", ")}${awards}${impact}${part}${team}`
     })
     .join("\n\n")
 

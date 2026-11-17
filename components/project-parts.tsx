@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { ArrowUpRight, Github, Play } from "lucide-react"
+import { ArrowUpRight, Award, Github, Play } from "lucide-react"
 import { ProjectImageFallback } from "@/components/project-image-fallback"
 import { cn } from "@/lib/utils"
 import { getProjectLinks, type Project } from "@/lib/content"
@@ -66,6 +66,28 @@ export function ProjectLinks({ project }: { project: Project }) {
         </a>
       ))}
     </div>
+  )
+}
+
+export function ProjectTagline({ project }: { project: Project }) {
+  if (!project.tagline) return null
+  return <p className="text-pretty font-display text-xl font-medium leading-snug tracking-tight">{project.tagline}</p>
+}
+
+export function ProjectAwards({ project }: { project: Project }) {
+  if (!project.awards?.length) return null
+  return (
+    <ul aria-label="Awards" className="flex flex-wrap gap-2">
+      {project.awards.map((a) => (
+        <li
+          key={a}
+          className="inline-flex items-center gap-1.5 rounded-full border border-signal/50 px-3 py-1 text-xs font-medium text-signal"
+        >
+          <Award aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+          {a}
+        </li>
+      ))}
+    </ul>
   )
 }
 

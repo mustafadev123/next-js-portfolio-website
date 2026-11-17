@@ -23,6 +23,10 @@ export interface Project {
   technologies: string[]
   /** Shorter copy for compact placements (hero, home teasers). Falls back to `description`. */
   summary?: string
+  /** One-line pitch shown above the summary on showcase layouts. */
+  tagline?: string
+  /** Awards and placements, shown as badges. */
+  awards?: string[]
   /** Path under /public. Layouts render a generated fallback when this is missing. */
   image?: string | null
   liveUrl?: string | null

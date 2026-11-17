@@ -4,11 +4,13 @@ import { useEffect, useMemo, useState } from "react"
 import { Search, X } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import {
+  ProjectAwards,
   ProjectContribution,
   ProjectImpact,
   ProjectLinks,
   ProjectMedia,
   ProjectStack,
+  ProjectTagline,
 } from "@/components/project-parts"
 import { cn } from "@/lib/utils"
 import { getProjectSlug, projectCategories, projects, type Project } from "@/lib/content"
@@ -53,6 +55,9 @@ function ProjectEntry({ project, number, highlighted }: { project: Project; numb
               {project.title}
             </h2>
           </div>
+
+          <ProjectAwards project={project} />
+          <ProjectTagline project={project} />
 
           <p className="max-w-[68ch] text-pretty leading-relaxed text-muted-foreground">{project.description}</p>
 
