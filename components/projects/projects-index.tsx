@@ -30,7 +30,8 @@ function ProjectEntry({ project, number, highlighted }: { project: Project; numb
       )}
     >
       <Reveal className="grid gap-x-12 gap-y-8 py-12 lg:grid-cols-12 lg:py-16">
-        <div className="lg:col-span-5">
+        {/* Sticky on desktop so the image stays beside long write-ups instead of leaving a gap below it */}
+        <div className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
           <div className="overflow-hidden rounded-md border border-rule">
             <ProjectMedia project={project} sizes="(min-width: 1024px) 36vw, 100vw" />
           </div>
